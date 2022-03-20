@@ -5,6 +5,7 @@ import EditCardModalPage from './pages/EditCardModalPage';
 import LandingPage from './pages/LandingPage';
 import NotFound from './pages/NotFound';
 import SingleBoardPage from './pages/SingleBoardPage';
+import './App.css';
 
 const App = () => {
 	return (

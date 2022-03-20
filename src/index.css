@@ -12,6 +12,8 @@ code {
 		monospace;
 }
 
-/* ROOT/GLOBAL STYLES */
-/* :root {
-} */
+:root {
+	--clr-main: #2b16bb;
+	--clr-black: #222;
+	--clr-white-grey: #fafafa;
+}

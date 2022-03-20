@@ -7,20 +7,20 @@ const AuthPage = () => {
 
 	return (
 		<>
-			<header>
+			<header className='header'>
 				<nav className='nav'>
-					<div className='nav__logo'>KANBANA</div>
+					<div className='logo'>KANBANA</div>
 					<div className='nav__cta'>
 						<button
 							type='button'
-							className='btn'
+							className={`btn ${formType === 'login' && 'active'}`}
 							onClick={() => setFormType('login')}
 						>
 							login
 						</button>
 						<button
 							type='button'
-							className='btn'
+							className={`btn ${formType === 'register' && 'active'}`}
 							onClick={() => setFormType('register')}
 						>
 							register
@@ -28,9 +28,18 @@ const AuthPage = () => {
 					</div>
 				</nav>
 			</header>
-			<section>
-				{formType === 'login' ? <LoginForm /> : <RegisterForm />}
+			<section className='section auth-section'>
+				{formType === 'login' ? (
+					<LoginForm setFormType={setFormType} />
+				) : (
+					<RegisterForm setFormType={setFormType} />
+				)}
 			</section>
+			<small className='section auth-info auth-section'>
+				Once you {`${formType === 'login' ? 'login' : 'register'}`}, you'll be
+				navigated to boards page where you can create boards and invite members
+				to collaborate with other users.
+			</small>
 		</>
 	);
 };
