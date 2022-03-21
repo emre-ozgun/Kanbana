@@ -1,9 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LoginForm from '../components/login-form/LoginForm';
 import RegisterForm from '../components/register-form/RegisterForm';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../hooks';
+import { selectAuth } from '../features/auth/authSlice';
 
 const AuthPage = () => {
 	const [formType, setFormType] = useState<'login' | 'register'>('register');
+	const navigate = useNavigate();
+	const { user } = useAppSelector(selectAuth);
+
+	useEffect(() => {
+		if (user) {
+			navigate('/boards');
+		}
+	}, [user, navigate]);
 
 	return (
 		<>
