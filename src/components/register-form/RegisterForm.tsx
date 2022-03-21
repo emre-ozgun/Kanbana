@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { registerUser, selectAuth, clear } from '../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
-type RegisterFormState = {
+export type RegisterFormState = {
 	username: string;
 	password: string;
 	passwordConfirm: string;
@@ -17,18 +20,78 @@ const RegisterForm = ({ setFormType }: RegisterFormProps) => {
 		passwordConfirm: '',
 	};
 
+	const navigate = useNavigate();
+
+	const dispatch = useAppDispatch();
+	const { isError, isLoading, isSuccess, user, message } =
+		useAppSelector(selectAuth);
+
 	const [formFields, setFormFields] = useState(initialRegisterState);
+	// conditionally disabling the button
+	const [disabled, setDisabled] = useState(true);
+
+	useEffect(() => {
+		if (isSuccess && user) {
+			navigate('/boards');
+			dispatch(clear());
+			return;
+		}
+
+		if (isError) {
+			const timeout = setTimeout(() => {
+				dispatch(clear());
+			}, 5000);
+
+			return () => clearTimeout(timeout);
+		}
+	}, [isSuccess, isError, user, dispatch, navigate]);
+
+	// Validation
+	useEffect(() => {
+		if (!formFields.username || formFields.username.length < 2) {
+			setDisabled(true);
+		} else if (
+			formFields.password !== formFields.passwordConfirm ||
+			!formFields.password ||
+			!formFields.passwordConfirm
+		) {
+			setDisabled(true);
+		} else {
+			setDisabled(false);
+		}
+	}, [formFields.username, formFields.password, formFields.passwordConfirm]);
+
+	const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		dispatch(registerUser(formFields));
+
+		setFormFields(initialRegisterState);
+	};
 
 	return (
-		<form className='form form-register'>
+		<form className='form form-register' onSubmit={(e) => handleFormSubmit(e)}>
 			<h1 className='form-title'>register</h1>
+			{isError && message && (
+				<p style={{ color: 'red', opacity: '0.5', fontSize: '12px' }}>
+					{message}
+				</p>
+			)}
 			<div className='form-control'>
-				<label htmlFor='username'>username</label>
+				<label htmlFor='username'>name</label>
 				<input
 					type='text'
 					name='username'
 					id='username'
 					placeholder='Your username'
+					autoComplete='off'
+					value={formFields.username}
+					onChange={(e) => {
+						setFormFields({
+							...formFields,
+							[e.target.name]: e.target.value,
+						});
+					}}
 				/>
 			</div>
 			<div className='form-control'>
@@ -38,6 +101,14 @@ const RegisterForm = ({ setFormType }: RegisterFormProps) => {
 					name='password'
 					id='password'
 					placeholder='Your password'
+					autoComplete='off'
+					value={formFields.password}
+					onChange={(e) => {
+						setFormFields({
+							...formFields,
+							[e.target.name]: e.target.value,
+						});
+					}}
 				/>
 			</div>
 			<div className='form-control'>
@@ -47,14 +118,29 @@ const RegisterForm = ({ setFormType }: RegisterFormProps) => {
 					name='passwordConfirm'
 					id='passwordConfirm'
 					placeholder='Confirm your password'
+					autoComplete='off'
+					value={formFields.passwordConfirm}
+					onChange={(e) => {
+						setFormFields({
+							...formFields,
+							[e.target.name]: e.target.value,
+						});
+					}}
 				/>
 			</div>
 			<small onClick={() => setFormType('login')}>
 				Already have an account ? - Login
 			</small>
-			<button type='submit' className='form-btn'>
-				register
-			</button>
+
+			{isLoading ? (
+				<button type='submit' className='form-btn' disabled={disabled}>
+					loading
+				</button>
+			) : (
+				<button type='submit' className='form-btn' disabled={disabled}>
+					register
+				</button>
+			)}
 		</form>
 	);
 };
