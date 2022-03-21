@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
-import { AuthState, User } from './authTypes';
+import { AuthState } from './authTypes';
 import { getUserFromLocalStorage } from '../../utils/authLocalStorage';
 import { LoginFormState } from '../../components/login-form/LoginForm';
 import { RegisterFormState } from '../../components/register-form/RegisterForm';

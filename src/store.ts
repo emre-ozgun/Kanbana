@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/auth/authSlice';
+import boardListReducer from './features/boardList/boardSlice';
 // ...
 
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
+		boardList: boardListReducer,
 	},
 });
 
