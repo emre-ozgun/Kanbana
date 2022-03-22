@@ -49,7 +49,7 @@ const AuthPage = () => {
 			<small className='section auth-info auth-section'>
 				Once you {`${formType === 'login' ? 'login' : 'register'}`}, you'll be
 				navigated to boards page where you can create boards and invite members
-				to collaborate with other users.
+				to collaborate with people.
 			</small>
 		</>
 	);

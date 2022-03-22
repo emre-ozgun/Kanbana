@@ -43,6 +43,8 @@ export const loginUser = createAsyncThunk(
 				error.response.status === 404
 			) {
 				message = 'Something went wrong.';
+			} else {
+				message = 'Invalid Credentials';
 			}
 
 			return thunkApi.rejectWithValue(message);
@@ -69,6 +71,14 @@ export const authSlice = createSlice({
 			state.isError = false;
 			state.isSuccess = false;
 			state.message = '';
+		},
+		logout: (state) => {
+			state.user = null;
+			state.isLoading = false;
+			state.isError = false;
+			state.isSuccess = false;
+			state.message = '';
+			localStorage.clear();
 		},
 	},
 	extraReducers: (builder) => {
@@ -112,7 +122,7 @@ export const authSlice = createSlice({
 	},
 });
 
-export const { clear } = authSlice.actions;
+export const { clear, logout } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectAuth = (state: RootState) => state.auth;

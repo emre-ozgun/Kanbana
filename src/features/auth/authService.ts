@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_URL;
 
+// * login service
 const login = async (loginCredentials: LoginFormState) => {
 	const response = await axios.post(`${baseUrl}/auth/login`, loginCredentials);
 
@@ -15,6 +16,7 @@ const login = async (loginCredentials: LoginFormState) => {
 	return response.data;
 };
 
+// * register service
 const register = async (registerCredentials: RegisterFormState) => {
 	const response = await axios.post(
 		`${baseUrl}/auth/register`,

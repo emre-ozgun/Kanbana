@@ -1,15 +1,38 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+	createSlice,
+	createAsyncThunk,
+	createSelector,
+	PayloadAction,
+} from '@reduxjs/toolkit';
+
 import type { RootState } from '../../store';
 import boardService from './boardService';
 
-type Board = {
+export type Member = {
+	username: string;
+	boardMemberId: number;
+};
+
+export type OwnedBoard = {
 	id: number;
-	title: string;
 	ownerId: number;
+	title: string;
+
+	members: Member[] | [];
+};
+type MemberBoard = {
+	id: number;
+	ownerId: number;
+	title: string;
+
+	members: Member[] | [];
 };
 
 type BoardListStateType = {
-	boards: Board[];
+	boards: {
+		ownedBoards: OwnedBoard[];
+		memberBoards: MemberBoard[];
+	};
 	isLoading: boolean;
 	isError: boolean;
 	isSuccess: boolean;
@@ -17,7 +40,10 @@ type BoardListStateType = {
 };
 
 const initialState: BoardListStateType = {
-	boards: [],
+	boards: {
+		ownedBoards: [],
+		memberBoards: [],
+	},
 	isLoading: false,
 	isError: false,
 	isSuccess: false,
@@ -33,13 +59,29 @@ export const getBoardList = createAsyncThunk(
 
 		try {
 			return await boardService.getBoards(token, ownerId);
-		} catch (error) {}
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				'There was an error. Please try refreshing the page...'
+			);
+		}
 	}
 );
 
-export const createBoard = createAsyncThunk('boards/createBoard', async () => {
-	// boardtitle to create
-});
+export const createBoard = createAsyncThunk(
+	'boards/createBoard',
+	async (boardTitle: string, thunkApi) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await boardService.createBoard(boardTitle, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				'There was an error. Please try refreshing the page...'
+			);
+		}
+	}
+);
 
 export const updateBoard = createAsyncThunk('boards/updateBoard', async () => {
 	// need id and payload (new title) to update
@@ -55,7 +97,10 @@ export const boardList = createSlice({
 	initialState,
 	reducers: {
 		clear: (state) => {
-			state.boards = [];
+			state.boards = {
+				ownedBoards: [],
+				memberBoards: [],
+			};
 			state.isLoading = false;
 			state.isError = false;
 			state.isSuccess = false;
@@ -63,12 +108,41 @@ export const boardList = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(getBoardList.pending, (state) => {});
-		builder.addCase(getBoardList.rejected, (state, action) => {});
-		builder.addCase(getBoardList.fulfilled, (state, action) => {});
-		builder.addCase(createBoard.pending, (state) => {});
-		builder.addCase(createBoard.rejected, (state, action) => {});
-		builder.addCase(createBoard.fulfilled, (state, action) => {});
+		builder.addCase(getBoardList.pending, (state) => {
+			state.isLoading = true;
+		});
+		builder.addCase(getBoardList.rejected, (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+			if (typeof action.payload === 'string') {
+				state.message = action.payload;
+			}
+		});
+		builder.addCase(getBoardList.fulfilled, (state, action) => {
+			state.isLoading = false;
+
+			state.isSuccess = true;
+			if (action.payload) {
+				state.boards = action.payload;
+			}
+		});
+		builder.addCase(createBoard.pending, (state) => {
+			state.isLoading = true;
+		});
+		builder.addCase(createBoard.rejected, (state, action) => {
+			state.isLoading = false;
+			state.isError = true;
+			if (typeof action.payload === 'string') {
+				state.message = action.payload;
+			}
+		});
+		builder.addCase(createBoard.fulfilled, (state, { payload }) => {
+			state.isLoading = false;
+			state.isSuccess = true;
+			if (payload) {
+				state.boards.ownedBoards.push(payload);
+			}
+		});
 		builder.addCase(updateBoard.pending, (state) => {});
 		builder.addCase(updateBoard.rejected, (state, action) => {});
 		builder.addCase(updateBoard.fulfilled, (state, action) => {});
@@ -82,5 +156,10 @@ export const { clear } = boardList.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectBoardList = (state: RootState) => state.boardList;
+
+export const selectMemoBoard = createSelector(
+	(state: RootState) => state.boardList.boards,
+	(boards) => boards
+);
 
 export default boardList.reducer;
