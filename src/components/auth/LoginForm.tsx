@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginUser, selectAuth, clear } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import './Auth.css';
 
 export type LoginFormState = {
 	username: string;
@@ -58,6 +57,7 @@ const LoginForm = ({ setFormType }: LoginFormProps) => {
 		e.preventDefault();
 
 		dispatch(loginUser(formFields));
+		dispatch(clear());
 
 		setFormFields(initialLoginState);
 	};

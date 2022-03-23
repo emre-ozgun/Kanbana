@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { registerUser, selectAuth, clear } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import './Auth.css';
 
 export type RegisterFormState = {
 	username: string;
@@ -66,6 +65,7 @@ const RegisterForm = ({ setFormType }: RegisterFormProps) => {
 		e.preventDefault();
 
 		dispatch(registerUser(formFields));
+		dispatch(clear());
 
 		setFormFields(initialRegisterState);
 	};

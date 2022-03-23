@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppDispatch } from '../../../hooks';
 import { createBoard } from '../../../features/boardList/boardSlice';
+import useOnClickOutside from '../../../utils/useClickOutside';
 import '../BoardList.css';
 
 type AddNewBoardType = {
@@ -16,6 +17,9 @@ const AddNewBoard = ({
 	const dispatch = useAppDispatch();
 
 	const inputRef = useRef<null | HTMLInputElement>(null);
+	const boardRef = useRef<null | HTMLFormElement>(null);
+
+	useOnClickOutside(boardRef, () => setShowAddBoardField(false));
 
 	useEffect(() => {
 		if (showAddBoardField) {
@@ -40,7 +44,11 @@ const AddNewBoard = ({
 	};
 
 	return (
-		<form className='add-board' onSubmit={(e) => handleAddBoard(e)}>
+		<form
+			className='add-board'
+			onSubmit={(e) => handleAddBoard(e)}
+			ref={boardRef}
+		>
 			<div className='add-board__input'>
 				<input
 					ref={inputRef}

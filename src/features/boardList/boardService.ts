@@ -94,14 +94,14 @@ const editBoard = async (
 	//edit/board
 };
 
-const addMemberToBoard = async (memberId: number, boardId: number) => {
-	// add member to boardd
-};
+// const addMemberToBoard = async (memberId: number, boardId: number) => {
+// 	// add member to boardd
+// };
 
-const getAvailableMembers = async () => {
-	// get user list to invite to board
-	// filter out current authenticated user because you shouldn't be able to add yourself as  a member...
-};
+// const getAvailableMembers = async () => {
+// 	// get user list to invite to board
+// 	// filter out current authenticated user because you shouldn't be able to add yourself as  a member...
+// };
 
 const boardService = {
 	getBoards,

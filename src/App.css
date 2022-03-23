@@ -7,6 +7,17 @@
 body {
 	color: var(--clr-black);
 }
+.section {
+	padding: 4rem 0.75rem 1rem 0.75rem;
+	max-width: 768px;
+}
+
+a {
+	text-decoration: none;
+	color: #222;
+}
+
+/* * AuthPage styles */
 
 header {
 	background-color: #fff;
@@ -51,17 +62,35 @@ header {
 	letter-spacing: 1px;
 }
 
-.section {
-	padding: 4rem 0.75rem 1rem 0.75rem;
-	max-width: 768px;
-}
 .auth-section {
 	margin: 0 auto;
 	display: flex;
 	justify-content: center;
 }
 
-/* * register form */
+.auth-info {
+	margin-top: -3rem;
+	width: 280px;
+	max-width: 100%;
+	text-align: center;
+	font-size: 0.75rem;
+	color: var(--clr-black);
+	opacity: 0.5;
+}
+
+button[disabled='disabled'],
+button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+button:disabled:hover {
+	opacity: 0.5;
+}
+
+/* * End of Auth Page styles */
+
+/* *  auth form */
 
 .form {
 	padding: 2.5rem 2rem;
@@ -151,24 +180,4 @@ header {
 	opacity: 0.9;
 }
 
-/* * end of register form */
-
-.auth-info {
-	margin-top: -6rem;
-	width: 280px;
-	max-width: 100%;
-	text-align: center;
-	font-size: 0.75rem;
-	color: var(--clr-black);
-	opacity: 0.5;
-}
-
-button[disabled='disabled'],
-button:disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
-}
-
-button:disabled:hover {
-	opacity: 0.5;
-}
+/* * end of auth form */

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
 	BrowserRouter,
 	Routes,
@@ -6,15 +5,15 @@ import {
 	Navigate,
 	useLocation,
 } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
 import BoardsPage from './pages/BoardsPage';
+import KanbanBoardPage from './pages/KanbanBoardPage';
 import EditCardModalPage from './pages/EditCardModalPage';
-import LandingPage from './pages/LandingPage';
 import NotFound from './pages/NotFound';
-import SingleBoardPage from './pages/SingleBoardPage';
-import './App.css';
 import { useAppSelector } from './hooks';
 import { selectAuth } from './features/auth/authSlice';
+import './App.css';
 
 const App = () => {
 	return (
@@ -35,7 +34,7 @@ const App = () => {
 					path='/board/:boardId'
 					element={
 						<RequireAuth>
-							<SingleBoardPage />
+							<KanbanBoardPage />
 						</RequireAuth>
 					}
 				/>
