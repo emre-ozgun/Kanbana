@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginUser, selectAuth, clear } from '../../features/auth/authSlice';
+import { registerUser, selectAuth, clear } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import './Auth.css';
 
-export type LoginFormState = {
+export type RegisterFormState = {
 	username: string;
 	password: string;
+	passwordConfirm: string;
 };
 
-type LoginFormProps = {
+type RegisterFormProps = {
 	setFormType: React.Dispatch<React.SetStateAction<'login' | 'register'>>;
 };
 
-const LoginForm = ({ setFormType }: LoginFormProps) => {
-	const initialLoginState: LoginFormState = {
+const RegisterForm = ({ setFormType }: RegisterFormProps) => {
+	const initialRegisterState: RegisterFormState = {
 		username: '',
 		password: '',
+		passwordConfirm: '',
 	};
 
 	const navigate = useNavigate();
@@ -24,7 +27,8 @@ const LoginForm = ({ setFormType }: LoginFormProps) => {
 	const { isError, isLoading, isSuccess, user, message } =
 		useAppSelector(selectAuth);
 
-	const [formFields, setFormFields] = useState(initialLoginState);
+	const [formFields, setFormFields] = useState(initialRegisterState);
+	// conditionally disabling the button
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
@@ -43,27 +47,32 @@ const LoginForm = ({ setFormType }: LoginFormProps) => {
 		}
 	}, [isSuccess, isError, user, dispatch, navigate]);
 
+	// Validation
 	useEffect(() => {
 		if (!formFields.username || formFields.username.length < 2) {
 			setDisabled(true);
-		} else if (!formFields.password) {
+		} else if (
+			formFields.password !== formFields.passwordConfirm ||
+			!formFields.password ||
+			!formFields.passwordConfirm
+		) {
 			setDisabled(true);
 		} else {
 			setDisabled(false);
 		}
-	}, [formFields.username, formFields.password]);
+	}, [formFields.username, formFields.password, formFields.passwordConfirm]);
 
 	const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		dispatch(loginUser(formFields));
+		dispatch(registerUser(formFields));
 
-		setFormFields(initialLoginState);
+		setFormFields(initialRegisterState);
 	};
 
 	return (
 		<form className='form form-register' onSubmit={(e) => handleFormSubmit(e)}>
-			<h1 className='form-title'>Login</h1>
+			<h1 className='form-title'>register</h1>
 			{isError && message && (
 				<p style={{ color: 'red', opacity: '0.5', fontSize: '12px' }}>
 					{message}
@@ -93,8 +102,8 @@ const LoginForm = ({ setFormType }: LoginFormProps) => {
 					name='password'
 					id='password'
 					placeholder='Your password'
-					value={formFields.password}
 					autoComplete='off'
+					value={formFields.password}
 					onChange={(e) => {
 						setFormFields({
 							...formFields,
@@ -103,22 +112,38 @@ const LoginForm = ({ setFormType }: LoginFormProps) => {
 					}}
 				/>
 			</div>
-
-			<small onClick={() => setFormType('register')}>
-				Don't have an account ? - Register
+			<div className='form-control'>
+				<label htmlFor='passwordConfirm'>confirm password</label>
+				<input
+					type='password'
+					name='passwordConfirm'
+					id='passwordConfirm'
+					placeholder='Confirm your password'
+					autoComplete='off'
+					value={formFields.passwordConfirm}
+					onChange={(e) => {
+						setFormFields({
+							...formFields,
+							[e.target.name]: e.target.value,
+						});
+					}}
+				/>
+			</div>
+			<small onClick={() => setFormType('login')}>
+				Already have an account ? - Login
 			</small>
 
 			{isLoading ? (
 				<button type='submit' className='form-btn' disabled={disabled}>
-					Loading
+					loading
 				</button>
 			) : (
 				<button type='submit' className='form-btn' disabled={disabled}>
-					Login
+					register
 				</button>
 			)}
 		</form>
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;

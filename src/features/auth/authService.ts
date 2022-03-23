@@ -1,5 +1,5 @@
-import { LoginFormState } from '../../components/login-form/LoginForm';
-import { RegisterFormState } from '../../components/register-form/RegisterForm';
+import { LoginFormState } from '../../components/auth/LoginForm';
+import { RegisterFormState } from '../../components/auth/RegisterForm';
 import { setUserToLocalStorage } from '../../utils/authLocalStorage';
 import axios from 'axios';
 

@@ -1,5 +1,6 @@
 import { OwnedBoard } from '../../../features/boardList/boardSlice';
 import CreatedBoardMember from './CreatedBoardMember';
+import '../BoardList.css';
 
 type CreatedBoardItemProps = {
 	board: OwnedBoard;
@@ -12,23 +13,11 @@ const CreatedBoardItem = ({ board }: CreatedBoardItemProps) => {
 				{board.title}
 			</h4>
 			<div className='board-list-item__banners'>
-				{
-					board.members.length
-						? board.members.map((member) => (
-								<CreatedBoardMember
-									member={member}
-									key={member.boardMemberId}
-								/>
-						  ))
-						: null
-
-					// <button
-					// 	className='invite-member-btn'
-					// 	style={{ marginLeft: 'auto', display: 'inline-block' }}
-					// >
-					// 	Invite
-					// </button>
-				}
+				{board.members.length
+					? board.members.map((member) => (
+							<CreatedBoardMember member={member} key={member.boardMemberId} />
+					  ))
+					: null}
 			</div>
 		</article>
 	);

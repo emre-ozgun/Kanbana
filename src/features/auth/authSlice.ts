@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 import { AuthState } from './authTypes';
 import { getUserFromLocalStorage } from '../../utils/authLocalStorage';
-import { LoginFormState } from '../../components/login-form/LoginForm';
-import { RegisterFormState } from '../../components/register-form/RegisterForm';
+import { LoginFormState } from '../../components/auth/LoginForm';
+import { RegisterFormState } from '../../components/auth/RegisterForm';
 import authService from './authService';
 
 export const registerUser = createAsyncThunk(

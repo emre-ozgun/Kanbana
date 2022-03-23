@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import LoginForm from '../components/login-form/LoginForm';
-import RegisterForm from '../components/register-form/RegisterForm';
+import LoginForm from '../components/auth/LoginForm';
+import RegisterForm from '../components/auth/RegisterForm';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../hooks';
 import { selectAuth } from '../features/auth/authSlice';
@@ -9,6 +9,14 @@ const AuthPage = () => {
 	const [formType, setFormType] = useState<'login' | 'register'>('register');
 	const navigate = useNavigate();
 	const { user } = useAppSelector(selectAuth);
+
+	useEffect(() => {
+		if (formType === 'login') {
+			document.title = 'Login | Kanbana';
+		} else {
+			document.title = 'Register | Kanbana';
+		}
+	}, [formType]);
 
 	useEffect(() => {
 		if (user) {

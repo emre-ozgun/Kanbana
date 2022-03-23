@@ -20,7 +20,7 @@ export type OwnedBoard = {
 
 	members: Member[] | [];
 };
-type MemberBoard = {
+export type MemberBoard = {
 	id: number;
 	ownerId: number;
 	title: string;

@@ -1,7 +1,7 @@
-import './Header.css';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { logout, selectAuth } from '../../../features/auth/authSlice';
 import bannerUtil from '../../../utils/userBannerGenerator';
+import '../BoardList.css';
 
 const Header = () => {
 	const { user } = useAppSelector(selectAuth);

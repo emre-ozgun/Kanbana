@@ -1,6 +1,7 @@
 import React from 'react';
 import { OwnedBoard } from '../../../features/boardList/boardSlice';
 import CreatedBoardItem from './CreatedBoardItem';
+import '../BoardList.css';
 
 type CreatedBoardsProps = {
 	boards: OwnedBoard[] | [];
@@ -10,7 +11,9 @@ const CreatedBoards = ({ boards }: CreatedBoardsProps) => {
 	if (boards.length < 1) {
 		return (
 			<div className='board-list-container'>
-				<h4>Your board list is currently empty, try adding one...</h4>
+				<small style={{ opacity: 0.5 }}>
+					You haven't added any boards yet. Try adding one!
+				</small>
 			</div>
 		);
 	}

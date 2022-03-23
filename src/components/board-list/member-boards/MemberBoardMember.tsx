@@ -2,11 +2,11 @@ import bannerUtil from '../../../utils/userBannerGenerator';
 import { Member } from '../../../features/boardList/boardSlice';
 import '../BoardList.css';
 
-type CreatedBoardMemberProps = {
+type MemberBoardMemberProps = {
 	member: Member;
 };
 
-const CreatedBoardMember = ({ member }: CreatedBoardMemberProps) => {
+const MemberBoardMember = ({ member }: MemberBoardMemberProps) => {
 	return (
 		<div
 			key={member.boardMemberId}
@@ -25,4 +25,4 @@ const CreatedBoardMember = ({ member }: CreatedBoardMemberProps) => {
 	);
 };
 
-export default CreatedBoardMember;
+export default MemberBoardMember;

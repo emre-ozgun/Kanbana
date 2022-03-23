@@ -1,26 +1,26 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/board-list/header/Header';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import {
 	selectBoardList,
 	getBoardList,
-	createBoard,
 } from '../features/boardList/boardSlice';
-import Spinner from '../components/spinner/Spinner';
 import CreatedBoards from '../components/board-list/created-boards/CreatedBoards';
+import AddNewBoard from '../components/board-list/created-boards/AddNewBoard';
+import MemberBoards from '../components/board-list/member-boards/MemberBoards';
+import { FaUser, FaUsers } from 'react-icons/fa';
 
 const BoardsPage = () => {
 	const dispatch = useAppDispatch();
-	const { boards, isError, isLoading, message } =
+	const { boards, isError, isLoading, message, isSuccess } =
 		useAppSelector(selectBoardList);
 
 	const [showAddBoardField, setShowAddBoardField] = useState(false);
 
 	useEffect(() => {
+		document.title = 'Boards | Kanbana';
 		dispatch(getBoardList());
 	}, [dispatch]);
-
-	console.log('BOARDS FROM BOARDSPAGE', boards);
 
 	return (
 		<>
@@ -28,7 +28,10 @@ const BoardsPage = () => {
 			{/* <CreatedBoardsTitle/> */}
 			<section className='section board-list'>
 				<div className='board-list-title'>
-					<h1>Your Boards</h1>
+					<div className='board-list-title__wrapper'>
+						<FaUser />
+						<h3>Your Boards</h3>
+					</div>
 					{showAddBoardField ? (
 						<AddNewBoard
 							setShowAddBoardField={setShowAddBoardField}
@@ -44,7 +47,6 @@ const BoardsPage = () => {
 						</button>
 					)}
 				</div>
-				<div className='separator'></div>
 
 				{isError && (
 					<div className='board-list-error'>
@@ -52,79 +54,43 @@ const BoardsPage = () => {
 					</div>
 				)}
 
-				{isLoading ? (
+				{/* {isLoading && (
 					<div className='board-list-spinner'>
 						<Spinner />
 					</div>
-				) : (
+				)} */}
+
+				{/* {!isError && isSuccess && !isLoading && (
+					<CreatedBoards
+						boards={boards.ownedBoards.length ? boards.ownedBoards : []}
+					/>
+				)} */}
+				{!isError && isSuccess && !isLoading && (
+					<CreatedBoards
+						boards={boards.ownedBoards.length ? boards.ownedBoards : []}
+					/>
+				)}
+
+				{isLoading && (
 					<CreatedBoards
 						boards={boards.ownedBoards.length ? boards.ownedBoards : []}
 					/>
 				)}
 			</section>
+			<section className='section board-list'>
+				<div className='board-list-title'>
+					<div className='board-list-title__wrapper'>
+						<FaUsers />
+						<h3>Boards you participate in</h3>
+					</div>
+				</div>
+				{!isError && isSuccess && !isLoading && (
+					<MemberBoards
+						boards={boards.memberBoards.length ? boards.memberBoards : []}
+					/>
+				)}
+			</section>
 		</>
-	);
-};
-
-type AddNewBoardType = {
-	setShowAddBoardField: React.Dispatch<React.SetStateAction<boolean>>;
-	showAddBoardField: boolean;
-};
-
-const AddNewBoard = ({
-	setShowAddBoardField,
-	showAddBoardField,
-}: AddNewBoardType) => {
-	const [newBoardTitle, setNewBoardTitle] = useState('');
-	const dispatch = useAppDispatch();
-
-	const inputRef = useRef<null | HTMLInputElement>(null);
-
-	useEffect(() => {
-		if (showAddBoardField) {
-			if (inputRef) {
-				inputRef.current?.focus();
-			}
-		}
-	}, [showAddBoardField]);
-
-	const handleAddBoard = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		if (newBoardTitle) {
-			dispatch(createBoard(newBoardTitle));
-			setNewBoardTitle('');
-			setShowAddBoardField(false);
-		} else {
-			setShowAddBoardField(true);
-			inputRef.current?.focus();
-			return;
-		}
-	};
-
-	return (
-		<form className='add-board' onSubmit={(e) => handleAddBoard(e)}>
-			<div className='add-board__input'>
-				<input
-					ref={inputRef}
-					type='text'
-					placeholder='Enter board title...'
-					value={newBoardTitle}
-					onChange={(e) => setNewBoardTitle(e.target.value)}
-					// onBlur={() => setShowAddBoardField(false)}
-				/>
-			</div>
-			<div className='add-board__cta'>
-				<button type='submit'>Add board</button>
-				<button
-					type='button'
-					onClick={(e) => {
-						setShowAddBoardField(false);
-					}}
-				>
-					X
-				</button>
-			</div>
-		</form>
 	);
 };
 
