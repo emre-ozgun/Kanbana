@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 import kanbanService from './kanbanService';
 
-type BoardMember = {
+export type BoardMember = {
 	username: string;
 	boardMemberId: number;
 };
@@ -54,6 +54,38 @@ export const getBoard = createAsyncThunk(
 	}
 );
 
+export const deleteBoard = createAsyncThunk(
+	'board/deleteBoard',
+	async (boardId: number, thunkApi) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.deleteBoard(boardId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+
+export const leaveBoard = createAsyncThunk(
+	'board/leaveBoard',
+	async (boardMemberId: number, thunkApi) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.leaveBoard(boardMemberId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+
 export const board = createSlice({
 	name: 'board',
 	initialState,
@@ -69,6 +101,22 @@ export const board = createSlice({
 			state.isSuccess = true;
 			if (action.payload) {
 				state.board = action.payload;
+			}
+		});
+
+		builder.addCase(leaveBoard.fulfilled, (state, action) => {
+			if (action.payload) {
+				const newstate = {
+					...state,
+					board: {
+						...state.board,
+						members: state.board.members.filter(
+							(member: BoardMember) => member.boardMemberId !== action.payload
+						),
+					},
+				};
+
+				return newstate;
 			}
 		});
 	},

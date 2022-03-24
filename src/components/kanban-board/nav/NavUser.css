@@ -27,6 +27,7 @@
 	display: flex;
 	align-items: center;
 	gap: 0.25rem;
+	width: 100%;
 }
 
 .nav-user__info-banner {
@@ -47,6 +48,7 @@
 .nav-user__info-name {
 	text-transform: capitalize;
 	font-weight: 500;
+	margin-left: 0.5rem;
 }
 
 .nav-user-separator {

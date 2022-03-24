@@ -8,8 +8,18 @@ import './Navbar.css';
 import { useAppSelector } from '../../../hooks';
 import { selectAuth } from '../../../features/auth/authSlice';
 import bannerUtil from '../../../utils/userBannerGenerator';
+import { BoardMember } from '../../../features/board/kanbanSlice';
 
-const KanbanNavbar = () => {
+export type NavFieldsProps = {
+	navFields: {
+		id: number;
+		title: string;
+		ownerId: number;
+		members: BoardMember[];
+	};
+};
+
+const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 	const [isMembersOpen, setIsMembersOpen] = useState(false);
 	const [isInviteOpen, setIsInviteOpen] = useState(false);
 	const [isUserOpen, setIsUserOpen] = useState(false);
@@ -32,23 +42,27 @@ const KanbanNavbar = () => {
 							{/* editable title -> onblur */}
 						</div>
 					</div>
-					<div className='nav-wrapper'>Development Board</div>
+					<div className='nav-wrapper'>{navFields.title}</div>
 
 					<div className='nav-wrapper'>
-						<div className='nav-item'>
-							<button
-								onClick={() => {
-									setIsMembersOpen(true);
-								}}
-							>
-								Members
-							</button>
-							{/* <BoardMembers/> */}
-						</div>
-						<div className='nav-item'>
-							<button>+ Invite</button>
-							{/* <AddMember/> */}
-						</div>
+						{user?.id === navFields.ownerId && (
+							<>
+								<div className='nav-item'>
+									<button
+										onClick={() => {
+											setIsMembersOpen(true);
+										}}
+									>
+										Members
+									</button>
+								</div>
+
+								<div className='nav-item'>
+									<button>+ Invite</button>
+									{/* <AddMember/> */}
+								</div>
+							</>
+						)}
 
 						<div className='nav-item'>
 							<button
@@ -72,6 +86,7 @@ const KanbanNavbar = () => {
 			<NavMembers
 				isMembersOpen={isMembersOpen}
 				setIsMembersOpen={setIsMembersOpen}
+				members={navFields.members}
 			/>
 			<NavInvite
 				isInviteOpen={isInviteOpen}
@@ -81,6 +96,8 @@ const KanbanNavbar = () => {
 				isUserOpen={isUserOpen}
 				setIsUserOpen={setIsUserOpen}
 				username={user?.username}
+				userId={user?.id}
+				navFields={navFields}
 			/>
 		</>
 	);

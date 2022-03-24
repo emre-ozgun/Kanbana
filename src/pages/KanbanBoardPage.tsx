@@ -18,7 +18,14 @@ const KanbanBoardPage = () => {
 
 	return (
 		<>
-			<KanbanNav />
+			<KanbanNav
+				navFields={{
+					id: board.id,
+					title: board.title,
+					ownerId: board.ownerId,
+					members: board.members,
+				}}
+			/>
 			<KanbanBoard />
 		</>
 	);

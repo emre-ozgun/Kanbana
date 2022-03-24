@@ -34,11 +34,41 @@ const getBoard = async (
 	// baseUrl/board/id <== URL
 };
 
+const deleteBoard = async (boardId: number, token: string | undefined) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	await axios.delete(`${baseUrl}/board/${boardId}`, config);
+};
+
+const leaveBoard = async (boardMemberId: number, token: string | undefined) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	await axios.delete(`${baseUrl}/board-member/${boardMemberId}`, config);
+
+	return boardMemberId;
+};
+
+const removeMemberFromBoard = () => {};
+
+const addMemberToBoard = () => {};
+
 // const inviteMemberToBoard = async (POST w/ boardId, username) => {};
 // const removeMemberFromBoard = async (DELETE w/ boardMemberId) => {};
 
 const boardService = {
 	getBoard,
+	deleteBoard,
+	leaveBoard,
+	removeMemberFromBoard,
+	addMemberToBoard,
 };
 
 export default boardService;
