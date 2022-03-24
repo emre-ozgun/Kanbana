@@ -1,11 +1,21 @@
+import { useEffect } from 'react';
 import KanbanNav from '../components/kanban-board/nav/Navbar';
 import KanbanBoard from '../components/kanban-board/board/Board';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { getBoard, selectBoard } from '../features/board/kanbanSlice';
 
 const KanbanBoardPage = () => {
-	const params = useParams();
+	const { boardId } = useParams();
+	const dispatch = useAppDispatch();
+	const { board, isError, isLoading, isSuccess } = useAppSelector(selectBoard);
 
-	console.log(params);
+	useEffect(() => {
+		dispatch(getBoard(boardId));
+	}, [dispatch, boardId]);
+
+	console.log(board, isSuccess);
+
 	return (
 		<>
 			<KanbanNav />
