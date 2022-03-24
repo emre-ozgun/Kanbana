@@ -1,0 +1,60 @@
+.kanban-nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px 4px;
+}
+
+.nav-wrapper {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-weight: 500;
+}
+
+.nav-boards {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	font-weight: 600;
+	background-color: var(--clr-black);
+	color: var(--clr-white-grey);
+	padding: 0.25rem 0.5rem;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+
+.nav-item > button {
+	padding: 0.4rem 0.5rem;
+	font-weight: 600;
+	background-color: var(--clr-black);
+	border-radius: 2px;
+	color: var(--clr-white-grey);
+	border: none;
+	outline: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	cursor: pointer;
+	opacity: 0.8;
+}
+.nav-item > button:hover {
+	opacity: 0.85;
+}
+
+.nav-item .nav-item__user {
+	background-color: purple;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	opacity: 1;
+}

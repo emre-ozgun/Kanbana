@@ -9,7 +9,7 @@ type CreatedBoardItemProps = {
 
 const MemberBoardItem = ({ board }: CreatedBoardItemProps) => {
 	return (
-		<Link to={`/board/${board.id}`}>
+		<Link to={`/board/${board.id}`} className='board-list-item-link-wrapper'>
 			<article className='board-list-item' key={board.id}>
 				<h4 className='board-list-item__title' style={{ opacity: 0.8 }}>
 					{board.title}

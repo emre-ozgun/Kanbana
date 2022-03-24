@@ -9,8 +9,8 @@ type CreatedBoardItemProps = {
 
 const CreatedBoardItem = ({ board }: CreatedBoardItemProps) => {
 	return (
-		<Link to={`/board/${board.id}`}>
-			<article className='board-list-item' key={board.id}>
+		<Link to={`/board/${board.id}`} className='board-list-item-link-wrapper'>
+			<article key={board.id} className='board-list-item'>
 				<h4 className='board-list-item__title' style={{ opacity: 0.8 }}>
 					{board.title}
 				</h4>
