@@ -88,8 +88,6 @@ const inviteMembersToBoard = async (
 		},
 	};
 
-	console.log({ boardId, members });
-
 	const invitedMembers: BoardMember[] = [];
 
 	for (let member of members) {

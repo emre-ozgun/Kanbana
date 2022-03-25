@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from '../hooks';
 import {
 	selectBoardList,
 	getBoardList,
+	clearBoardList,
 } from '../features/boardList/boardSlice';
 import CreatedBoards from '../components/board-list/created-boards/CreatedBoards';
 import AddNewBoard from '../components/board-list/created-boards/AddNewBoard';
@@ -21,6 +22,10 @@ const BoardsPage = () => {
 	useEffect(() => {
 		document.title = 'Boards | Kanbana';
 		dispatch(getBoardList());
+
+		return () => {
+			dispatch(clearBoardList());
+		};
 	}, [dispatch]);
 
 	return (
