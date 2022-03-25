@@ -1,0 +1,15 @@
+.nav-title__input {
+	padding: 0.25rem;
+	font-weight: 600;
+	width: inherit;
+	border: 2px solid var(--clr-black);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+
+.nav-title__input:focus {
+	outline: none;
+}

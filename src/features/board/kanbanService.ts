@@ -56,9 +56,33 @@ const leaveBoard = async (boardMemberId: number, token: string | undefined) => {
 	return boardMemberId;
 };
 
+const editBoardTitle = async (
+	boardId: string | number,
+	newTitle: string,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	console.log(boardId);
+
+	const { data } = await axios.put(
+		`${baseUrl}/board/${boardId}`,
+		{ title: newTitle },
+		config
+	);
+
+	return data.title;
+};
+
 const removeMemberFromBoard = () => {};
 
-const addMemberToBoard = () => {};
+const addMemberToBoard = () => {
+	//batch post, checklist selected users to invite and post one by one!
+};
 
 // const inviteMemberToBoard = async (POST w/ boardId, username) => {};
 // const removeMemberFromBoard = async (DELETE w/ boardMemberId) => {};
@@ -69,6 +93,7 @@ const boardService = {
 	leaveBoard,
 	removeMemberFromBoard,
 	addMemberToBoard,
+	editBoardTitle,
 };
 
 export default boardService;

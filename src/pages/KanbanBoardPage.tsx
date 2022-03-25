@@ -12,6 +12,7 @@ const KanbanBoardPage = () => {
 
 	useEffect(() => {
 		dispatch(getBoard(boardId));
+		document.title = `${board.title} | Kanbana`;
 	}, [dispatch, boardId]);
 
 	console.log(board, isSuccess);

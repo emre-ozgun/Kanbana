@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import NavMembers from './NavMembers';
 import NavInvite from './NavInvite';
 import NavUser from './NavUser';
-import './Navbar.css';
+import NavTitle from './NavTitle';
 import { useAppSelector } from '../../../hooks';
 import { selectAuth } from '../../../features/auth/authSlice';
 import bannerUtil from '../../../utils/userBannerGenerator';
 import { BoardMember } from '../../../features/board/kanbanSlice';
+import './Navbar.css';
 
 export type NavFieldsProps = {
 	navFields: {
@@ -23,6 +24,7 @@ const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 	const [isMembersOpen, setIsMembersOpen] = useState(false);
 	const [isInviteOpen, setIsInviteOpen] = useState(false);
 	const [isUserOpen, setIsUserOpen] = useState(false);
+	const [isTitleOnEditMode, setIsTitleOnEditMode] = useState(false);
 
 	const { user } = useAppSelector(selectAuth);
 
@@ -37,12 +39,18 @@ const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 								Boards
 							</Link>
 						</div>
-						<div className='nav-item'>
-							{/* <BoardTitle/> */}
-							{/* editable title -> onblur */}
-						</div>
 					</div>
-					<div className='nav-wrapper'>{navFields.title}</div>
+					<div
+						className='nav-wrapper'
+						onClick={() => setIsTitleOnEditMode(true)}
+					>
+						<NavTitle
+							isTitleOnEditMode={isTitleOnEditMode}
+							setIsTitleOnEditMode={setIsTitleOnEditMode}
+							title={navFields.title}
+							boardId={navFields.id}
+						/>
+					</div>
 
 					<div className='nav-wrapper'>
 						{user?.id === navFields.ownerId && (
