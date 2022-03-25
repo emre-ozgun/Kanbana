@@ -66,8 +66,9 @@ const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 								</div>
 
 								<div className='nav-item'>
-									<button>+ Invite</button>
-									{/* <AddMember/> */}
+									<button onClick={() => setIsInviteOpen(true)}>
+										+ Invite
+									</button>
 								</div>
 							</>
 						)}
@@ -99,6 +100,8 @@ const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 			<NavInvite
 				isInviteOpen={isInviteOpen}
 				setIsInviteOpen={setIsInviteOpen}
+				ownerId={navFields.ownerId}
+				members={navFields.members}
 			/>
 			<NavUser
 				isUserOpen={isUserOpen}

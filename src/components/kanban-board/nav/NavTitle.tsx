@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { editBoardTitle } from '../../../features/board/kanbanSlice';
 import { useAppDispatch } from '../../../hooks';
 import './NavTitle.css';
@@ -67,4 +67,4 @@ const NavTitle = ({
 	}
 };
 
-export default NavTitle;
+export default React.memo(NavTitle);

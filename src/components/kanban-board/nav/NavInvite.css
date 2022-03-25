@@ -1,0 +1,95 @@
+.nav-invite {
+	display: none;
+}
+
+.nav-invite.active {
+	display: block;
+	position: absolute;
+	top: 45px;
+	right: 36px;
+	width: 250px;
+	height: auto;
+	padding: 0.75rem;
+	z-index: 999;
+	background-color: #fff;
+	box-shadow: 0px 1px 5px rgba(136, 107, 107, 0.25);
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+
+.invite-loading {
+	display: grid;
+	place-items: center;
+	transform: scale(0.5);
+	-webkit-transform: scale(0.5);
+	-moz-transform: scale(0.5);
+	-ms-transform: scale(0.5);
+	-o-transform: scale(0.5);
+}
+
+.nav-invite > h5 {
+	margin-bottom: 1rem;
+	border-bottom: 1px solid #eee;
+	padding: 0.25rem 0;
+}
+
+.nav-invite__form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.nav-invite__form > button {
+	margin: 0.5rem 0;
+	padding: 0.25rem 0.5rem;
+
+	background-color: var(--clr-black);
+	border: none;
+	outline: none;
+	text-transform: capitalize;
+	letter-spacing: 1px;
+	color: var(--clr-white-grey);
+	opacity: 0.95;
+	font-weight: 600;
+	cursor: pointer;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+
+.nav-invite__form-title {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.nav-invite__form-banner {
+	display: grid;
+	place-items: center;
+	text-transform: uppercase;
+	font-weight: 700;
+	width: 25px;
+	height: 25px;
+	background-color: salmon;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+.nav-invite__form-username {
+	text-transform: capitalize;
+	font-weight: 500;
+}
+
+.nav-invite__form > label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}

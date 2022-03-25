@@ -20,7 +20,6 @@ const BoardsPage = () => {
 
 	useEffect(() => {
 		document.title = 'Boards | Kanbana';
-		console.log('get board list fired');
 		dispatch(getBoardList());
 	}, [dispatch]);
 

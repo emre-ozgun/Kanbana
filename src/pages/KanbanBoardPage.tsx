@@ -8,14 +8,22 @@ import { getBoard, selectBoard } from '../features/board/kanbanSlice';
 const KanbanBoardPage = () => {
 	const { boardId } = useParams();
 	const dispatch = useAppDispatch();
-	const { board, isSuccess } = useAppSelector(selectBoard);
+	const { board } = useAppSelector(selectBoard);
 
+	// change page title and fetch board
 	useEffect(() => {
 		dispatch(getBoard(boardId));
 		document.title = `${board.title} | Kanbana`;
 	}, [dispatch, boardId, board.title]);
 
-	console.log(board, isSuccess);
+	// disable page scroll
+	useEffect(() => {
+		document.body.classList.add('lock-screen');
+
+		return function cleanup() {
+			document.body.classList.remove('lock-screen');
+		};
+	}, []);
 
 	return (
 		<>

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/auth/authSlice';
 import boardListReducer from './features/boardList/boardSlice';
 import boardReducer from './features/board/kanbanSlice';
+import userListReducer from './features/userList/userListSlice';
 // ...
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
 		auth: authReducer,
 		boardList: boardListReducer,
 		board: boardReducer,
+		userList: userListReducer,
 	},
 });
 

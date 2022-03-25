@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { BoardMember } from './kanbanSlice';
 
 const baseUrl = process.env.REACT_APP_URL;
 
@@ -76,21 +77,46 @@ const editBoardTitle = async (
 	return data.title;
 };
 
-const removeMemberFromBoard = () => {};
+const inviteMembersToBoard = async (
+	boardId: string | number | undefined,
+	members: BoardMember[],
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
 
-const addMemberToBoard = () => {
-	//batch post, checklist selected users to invite and post one by one!
+	console.log({ boardId, members });
+
+	const invitedMembers: BoardMember[] = [];
+
+	for (let member of members) {
+		const memberComposed = {
+			username: member.username,
+			boardMemberId: Infinity,
+		};
+
+		const { data } = await axios.post(
+			`${baseUrl}/board-member`,
+			{ username: member.username, boardId: Number(boardId) },
+			config
+		);
+
+		memberComposed.boardMemberId = data.id;
+
+		invitedMembers.push(memberComposed);
+	}
+
+	return invitedMembers;
 };
-
-// const inviteMemberToBoard = async (POST w/ boardId, username) => {};
-// const removeMemberFromBoard = async (DELETE w/ boardMemberId) => {};
 
 const boardService = {
 	getBoard,
 	deleteBoard,
 	leaveBoard,
-	removeMemberFromBoard,
-	addMemberToBoard,
+	inviteMembersToBoard,
 	editBoardTitle,
 };
 

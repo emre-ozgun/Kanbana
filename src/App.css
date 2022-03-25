@@ -181,3 +181,8 @@ button:disabled:hover {
 }
 
 /* * end of auth form */
+
+body.lock-screen {
+	overscroll-behavior-y: none;
+	overscroll-behavior-x: none;
+}

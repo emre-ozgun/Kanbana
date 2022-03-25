@@ -75,4 +75,4 @@ const NavUser = ({
 	);
 };
 
-export default NavUser;
+export default React.memo(NavUser);

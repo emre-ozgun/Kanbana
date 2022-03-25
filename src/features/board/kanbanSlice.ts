@@ -104,6 +104,27 @@ export const editBoardTitle = createAsyncThunk(
 		}
 	}
 );
+export const inviteMembersToBoard = createAsyncThunk(
+	'board/inviteMembersToBoard',
+	async (
+		{
+			boardId,
+			payload,
+		}: { boardId: string | number | undefined; payload: BoardMember[] },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.inviteMembersToBoard(boardId, payload, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
 
 export const board = createSlice({
 	name: 'board',
@@ -142,6 +163,13 @@ export const board = createSlice({
 		builder.addCase(editBoardTitle.fulfilled, (state, action) => {
 			if (action.payload) {
 				state.board.title = action.payload;
+			}
+		});
+		builder.addCase(inviteMembersToBoard.fulfilled, (state, action) => {
+			if (action.payload) {
+				action.payload.forEach((member: BoardMember) => {
+					state.board.members.push(member);
+				});
 			}
 		});
 	},
