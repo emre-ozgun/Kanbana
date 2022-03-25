@@ -24,8 +24,6 @@ const NavMembers = ({
 
 	const dispatch = useAppDispatch();
 
-	console.log(members);
-
 	return (
 		<div
 			className={`nav-members ${isMembersOpen && 'active'}`}
@@ -60,7 +58,7 @@ const NavMembers = ({
 				})
 			) : (
 				<div className='nav-members__member'>
-					<small>You don't have any members yet, try inviting a user!</small>
+					<small>You don't have any members, try inviting someone!</small>
 				</div>
 			)}
 		</div>

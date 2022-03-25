@@ -67,8 +67,6 @@ const editBoardTitle = async (
 		},
 	};
 
-	console.log(boardId);
-
 	const { data } = await axios.put(
 		`${baseUrl}/board/${boardId}`,
 		{ title: newTitle },

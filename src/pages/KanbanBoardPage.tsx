@@ -8,12 +8,12 @@ import { getBoard, selectBoard } from '../features/board/kanbanSlice';
 const KanbanBoardPage = () => {
 	const { boardId } = useParams();
 	const dispatch = useAppDispatch();
-	const { board, isError, isLoading, isSuccess } = useAppSelector(selectBoard);
+	const { board, isSuccess } = useAppSelector(selectBoard);
 
 	useEffect(() => {
 		dispatch(getBoard(boardId));
 		document.title = `${board.title} | Kanbana`;
-	}, [dispatch, boardId]);
+	}, [dispatch, boardId, board.title]);
 
 	console.log(board, isSuccess);
 

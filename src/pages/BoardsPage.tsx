@@ -9,6 +9,7 @@ import CreatedBoards from '../components/board-list/created-boards/CreatedBoards
 import AddNewBoard from '../components/board-list/created-boards/AddNewBoard';
 import MemberBoards from '../components/board-list/member-boards/MemberBoards';
 import { FaUser, FaUsers } from 'react-icons/fa';
+import Spinner from '../components/spinner/Spinner';
 
 const BoardsPage = () => {
 	const dispatch = useAppDispatch();
@@ -19,13 +20,14 @@ const BoardsPage = () => {
 
 	useEffect(() => {
 		document.title = 'Boards | Kanbana';
+		console.log('get board list fired');
 		dispatch(getBoardList());
 	}, [dispatch]);
 
 	return (
 		<>
 			<Header />
-			{/* <CreatedBoardsTitle/> */}
+
 			<section className='section board-list'>
 				<div className='board-list-title'>
 					<div className='board-list-title__wrapper'>
@@ -54,24 +56,13 @@ const BoardsPage = () => {
 					</div>
 				)}
 
-				{/* {isLoading && (
+				{isLoading && (
 					<div className='board-list-spinner'>
 						<Spinner />
 					</div>
-				)} */}
-
-				{/* {!isError && isSuccess && !isLoading && (
-					<CreatedBoards
-						boards={boards.ownedBoards.length ? boards.ownedBoards : []}
-					/>
-				)} */}
-				{!isError && isSuccess && !isLoading && (
-					<CreatedBoards
-						boards={boards.ownedBoards.length ? boards.ownedBoards : []}
-					/>
 				)}
 
-				{isLoading && (
+				{!isError && isSuccess && !isLoading && (
 					<CreatedBoards
 						boards={boards.ownedBoards.length ? boards.ownedBoards : []}
 					/>

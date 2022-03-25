@@ -82,20 +82,11 @@ export const createBoard = createAsyncThunk(
 	}
 );
 
-export const updateBoard = createAsyncThunk('boards/updateBoard', async () => {
-	// need id and payload (new title) to update
-	// maybe 'update-member' flag ? to handle update as well ?
-});
-
-export const deleteBoard = createAsyncThunk('boards/deleteBoard', async () => {
-	// need board id to delete...
-});
-
 export const boardList = createSlice({
 	name: 'boards',
 	initialState,
 	reducers: {
-		clear: (state) => {
+		clearBoardList: (state) => {
 			state.boards = {
 				ownedBoards: [],
 				memberBoards: [],
@@ -142,16 +133,10 @@ export const boardList = createSlice({
 				state.boards.ownedBoards.push(payload);
 			}
 		});
-		builder.addCase(updateBoard.pending, (state) => {});
-		builder.addCase(updateBoard.rejected, (state, action) => {});
-		builder.addCase(updateBoard.fulfilled, (state, action) => {});
-		builder.addCase(deleteBoard.pending, (state) => {});
-		builder.addCase(deleteBoard.rejected, (state, action) => {});
-		builder.addCase(deleteBoard.fulfilled, (state, action) => {});
 	},
 });
 
-export const { clear } = boardList.actions;
+export const { clearBoardList } = boardList.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectBoardList = (state: RootState) => state.boardList;

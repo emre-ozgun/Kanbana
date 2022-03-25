@@ -17,7 +17,7 @@ const NavTitle = ({
 	boardId,
 }: NavTitleProps) => {
 	const dispatch = useAppDispatch();
-	const [newTitle, setNewTitle] = useState(title);
+	const [newTitle, setNewTitle] = useState('');
 	const inputRef = useRef<null | HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -26,27 +26,41 @@ const NavTitle = ({
 		}
 	}, [isTitleOnEditMode]);
 
+	useEffect(() => {
+		setNewTitle(title);
+	}, [title]);
+
 	const handleEditBoardTitle = () => {
-		if (!newTitle) {
+		if (newTitle !== title && newTitle !== '') {
+			dispatch(editBoardTitle({ boardId, boardTitle: newTitle }));
 			setNewTitle(title);
 			setIsTitleOnEditMode(false);
+		}
+		if (newTitle === title) {
+			setIsTitleOnEditMode(false);
 		} else {
-			dispatch(editBoardTitle({ boardId, boardTitle: newTitle }));
-
+			setNewTitle(title);
 			setIsTitleOnEditMode(false);
 		}
 	};
 
 	if (isTitleOnEditMode) {
 		return (
-			<input
-				className='nav-title__input'
-				ref={inputRef}
-				type='text'
-				value={newTitle || title}
-				onChange={(e) => setNewTitle(e.target.value)}
-				onBlur={handleEditBoardTitle}
-			/>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					handleEditBoardTitle();
+				}}
+			>
+				<input
+					className='nav-title__input'
+					ref={inputRef}
+					type='text'
+					value={newTitle}
+					onChange={(e) => setNewTitle(e.target.value)}
+					onBlur={handleEditBoardTitle}
+				/>
+			</form>
 		);
 	} else {
 		return <>{title}</>;

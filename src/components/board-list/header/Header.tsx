@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { logout, selectAuth } from '../../../features/auth/authSlice';
 import bannerUtil from '../../../utils/userBannerGenerator';
 import '../BoardList.css';
+import { clearBoardList } from '../../../features/boardList/boardSlice';
 
 const Header = () => {
 	const { user } = useAppSelector(selectAuth);
@@ -31,7 +32,10 @@ const Header = () => {
 					<button
 						type='button'
 						className='board-list-nav__btn'
-						onClick={() => dispatch(logout())}
+						onClick={() => {
+							dispatch(logout());
+							dispatch(clearBoardList());
+						}}
 					>
 						logout
 					</button>
