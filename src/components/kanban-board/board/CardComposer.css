@@ -1,0 +1,22 @@
+.card-composer__form-textarea {
+	resize: none;
+	width: 100%;
+	max-height: 162px;
+	min-height: 66px;
+	font-family: inherit;
+	padding: 4px;
+	border: none;
+	outline: none;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	box-shadow: 0 1px 0 #091e4240;
+	margin-top: -4px;
+	margin-bottom: 4px;
+}
+
+.list-composer.active:hover {
+	background-color: transparent;
+}

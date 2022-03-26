@@ -12,7 +12,7 @@ const ListComposer = () => {
 
 	useEffect(() => {
 		if (isListComposerOpen) {
-			if (listComposerInputRef && listComposerRef.current) {
+			if (listComposerInputRef && listComposerInputRef.current) {
 				listComposerInputRef?.current?.focus();
 			}
 		}
@@ -31,7 +31,7 @@ const ListComposer = () => {
 						placeholder='Enter list title...'
 						className='list-composer__form-input'
 					/>
-					.
+
 					<div className='list-composer__cta'>
 						<button className='list-composer__cta-btn'>Add List</button>
 						<button

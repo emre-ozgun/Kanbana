@@ -12,7 +12,14 @@
 	-moz-border-radius: 3px;
 	-ms-border-radius: 3px;
 	-o-border-radius: 3px;
+	outline: none;
 }
+
+.list-composer__form-input:focus {
+	outline: none;
+	border-color: rgba(34, 34, 34, 0.788);
+}
+
 .list-composer__cta {
 	display: flex;
 	gap: 4px;

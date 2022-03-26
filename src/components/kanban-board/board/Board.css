@@ -1,12 +1,12 @@
 /* horizontal scroll bar styles */
 ::-webkit-scrollbar {
 	-webkit-appearance: none;
-	width: 3px;
+	width: 8px;
 }
 ::-webkit-scrollbar-thumb {
 	border-radius: 20px;
 	background-color: rgba(0, 0, 0, 0.1);
-	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+	/* -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5); */
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	-ms-border-radius: 20px;
@@ -79,7 +79,6 @@
 
 .card-container::-webkit-scrollbar-track {
 	border-radius: 12px;
-	background-color: #d9dce2;
 	background-color: #091e4214;
 	-webkit-border-radius: 12px;
 	-moz-border-radius: 12px;
@@ -138,13 +137,13 @@
 }
 
 .list-composer {
+	padding: 12px;
 	cursor: pointer;
 	border-radius: 3px;
 	height: auto;
 	min-height: 32px;
-	padding: 12px;
 	background-color: #ebecf0;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .list-composer:hover {
