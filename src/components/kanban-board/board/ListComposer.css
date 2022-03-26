@@ -1,0 +1,56 @@
+.list-composer.active {
+	padding: 4px;
+}
+
+.list-composer__form-input {
+	width: 100%;
+	padding: 0.4rem;
+	margin-bottom: 4px;
+	border: 2px solid rgba(34, 34, 34, 0.788);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+}
+.list-composer__cta {
+	display: flex;
+	gap: 4px;
+}
+
+.list-composer__cta-btn {
+	padding: 0.4rem 0.8rem;
+	font-weight: 600;
+	background-color: var(--clr-black);
+	border: none;
+	outline: none;
+	color: var(--clr-white-grey);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	cursor: pointer;
+}
+.list-composer__cta-btn:hover {
+	opacity: 0.75;
+}
+
+.list-composer__cta-btn-close {
+	border: none;
+	outline: none;
+	font-size: 18px;
+	height: 30px;
+	width: 30px;
+	border-radius: 3px;
+	background-color: transparent;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	cursor: pointer;
+	opacity: 0.75;
+}
+.list-composer__cta-btn-close:hover {
+	opacity: 0.9;
+}
