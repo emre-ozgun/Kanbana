@@ -60,3 +60,7 @@
 	text-transform: uppercase;
 	font-weight: 800;
 }
+
+.nav-wrapper__title {
+	font-weight: 700;
+}

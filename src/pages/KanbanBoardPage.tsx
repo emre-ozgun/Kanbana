@@ -25,6 +25,8 @@ const KanbanBoardPage = () => {
 		};
 	}, []);
 
+	console.log(board.lists);
+
 	return (
 		<>
 			<KanbanNav
@@ -35,7 +37,7 @@ const KanbanBoardPage = () => {
 					members: board.members,
 				}}
 			/>
-			<KanbanBoard />
+			<KanbanBoard lists={board.lists} />
 		</>
 	);
 };

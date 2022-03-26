@@ -39,17 +39,17 @@ const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 								Boards
 							</Link>
 						</div>
-					</div>
-					<div
-						className='nav-wrapper'
-						onClick={() => setIsTitleOnEditMode(true)}
-					>
-						<NavTitle
-							isTitleOnEditMode={isTitleOnEditMode}
-							setIsTitleOnEditMode={setIsTitleOnEditMode}
-							title={navFields.title}
-							boardId={navFields.id}
-						/>
+						<div
+							className='nav-wrapper nav-wrapper__title'
+							onClick={() => setIsTitleOnEditMode(true)}
+						>
+							<NavTitle
+								isTitleOnEditMode={isTitleOnEditMode}
+								setIsTitleOnEditMode={setIsTitleOnEditMode}
+								title={navFields.title}
+								boardId={navFields.id}
+							/>
+						</div>
 					</div>
 
 					<div className='nav-wrapper'>

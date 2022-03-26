@@ -1,0 +1,39 @@
+.board {
+	padding: 2rem 0rem 1rem 1rem;
+	height: calc(100vh - 42px);
+}
+
+.board-wrapper {
+	display: flex;
+
+	overflow-x: scroll;
+	height: 100%;
+}
+
+.list-container {
+	align-self: flex-start;
+	flex-shrink: 0;
+	height: auto;
+	width: 272px;
+	background-color: #ebecf0;
+	margin: 0 4px;
+}
+
+.list-composer {
+	flex-shrink: 0;
+	width: 272px;
+}
+
+::-webkit-scrollbar {
+	-webkit-appearance: none;
+	width: 3px;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 20px;
+	background-color: rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	-ms-border-radius: 20px;
+	-o-border-radius: 20px;
+}
