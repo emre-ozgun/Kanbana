@@ -1,5 +1,5 @@
 import { FaTrello } from 'react-icons/fa';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import NavMembers from './NavMembers';
 import NavInvite from './NavInvite';
@@ -114,4 +114,4 @@ const KanbanNavbar = ({ navFields }: NavFieldsProps) => {
 	);
 };
 
-export default KanbanNavbar;
+export default React.memo(KanbanNavbar);

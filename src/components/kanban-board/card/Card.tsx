@@ -28,9 +28,45 @@ const KanbanCard = ({ card }: CardPropsType) => {
 						);
 					})}
 			</div>
-			{card.title}
+			<span className='card-title-span'>{card.title}</span>
+
 			<div className='card-badges'>
-				{/* description */}
+				{card.description && (
+					<div className='badge'>
+						<div className='badge-icon'>
+							<div className='badge-icon-text'>
+								<MdSubject />
+							</div>
+						</div>
+					</div>
+				)}
+
+				<div className='badge'>
+					<span className='badge-icon'>
+						<div className='badge-icon-text'>
+							<MdOutlineAccessTime />
+							<span>27 Mar</span>
+						</div>
+					</span>
+				</div>
+
+				<div className='badge'>
+					<span className='badge-icon'>
+						<div className='badge-icon-text'>
+							<MdOutlineModeComment />
+							<span className='badge-text'>2</span>
+						</div>
+					</span>
+				</div>
+
+				<div className='badge'>
+					<span className='badge-icon badge-is-complete'>
+						<div className='badge-icon-text'>
+							<MdOutlineCheckBox />
+							<span className='badge-text'>0/6</span>
+						</div>
+					</span>
+				</div>
 				{/* duedate */}
 				{/* comment */}
 				{/* checklist */}
