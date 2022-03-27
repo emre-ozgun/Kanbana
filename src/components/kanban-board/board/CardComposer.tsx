@@ -25,6 +25,8 @@ const CardComposer = ({ listId }: CardComposerProps) => {
 			if (cardComposerInputRef && cardComposerInputRef.current) {
 				cardComposerInputRef?.current?.focus();
 			}
+		} else {
+			setCardTite('');
 		}
 	}, [isCardComposerOpen]);
 
@@ -37,6 +39,7 @@ const CardComposer = ({ listId }: CardComposerProps) => {
 			setCardTite('');
 			setIsCardComposerOpen(false);
 		} else {
+			cardComposerInputRef?.current?.focus();
 			return;
 		}
 	};

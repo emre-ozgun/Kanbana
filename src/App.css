@@ -182,6 +182,7 @@ button:disabled:hover {
 
 /* * end of auth form */
 
+/* kanban page prevent scrolling */
 body.lock-screen {
 	overscroll-behavior-y: none;
 	overscroll-behavior-x: none;

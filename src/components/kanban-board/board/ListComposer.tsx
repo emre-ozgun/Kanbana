@@ -22,6 +22,8 @@ const ListComposer = () => {
 			if (listComposerInputRef && listComposerInputRef.current) {
 				listComposerInputRef?.current?.focus();
 			}
+		} else {
+			setListTitle('');
 		}
 	}, [isListComposerOpen]);
 
@@ -34,6 +36,7 @@ const ListComposer = () => {
 			setListTitle('');
 			setIsListComposerOpen(false);
 		} else {
+			listComposerInputRef?.current?.focus();
 			return;
 		}
 	};
