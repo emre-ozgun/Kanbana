@@ -1,10 +1,30 @@
 import ListComposer from './ListComposer';
 import CardComposer from './CardComposer';
+import { Card, List } from '../../../features/board/kanbanSlice';
 
 import './Board.css';
 
+// export type Card = {
+// 	id: number;
+// 	title: string;
+// 	despcription: string | null;
+// 	order: number | null;
+// 	listId: number;
+// 	labels: any[];
+// 	checklists: any[];
+// 	comments: any[];
+// };
+
+// export type List = {
+// 	id: number;
+// 	order: number | null;
+// 	title: string;
+// 	boardId: number;
+// 	cards: Card[];
+// };
+
 type ListType = {
-	lists: any[];
+	lists: List[];
 };
 
 const Board = ({ lists }: ListType) => {
@@ -12,79 +32,29 @@ const Board = ({ lists }: ListType) => {
 
 	return (
 		<main className='board'>
-			<div className='list-wrapper'>
-				<div className='list-content'>
-					<div className='list-header'>list 1</div>
-					<div className='card-container'>
-						<div className='card'>
-							Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-							iusto eligendi accusantium natus recusandae blanditiis provident
-							nesciunt quod doloremque amet voluptates dolor, corrupti iste
-							optio unde placeat error! Tempora, corrupti.
+			{lists &&
+				lists.length > 0 &&
+				lists.map((list: List) => {
+					return (
+						<div className='list-wrapper' key={list.id}>
+							<div className='list-content'>
+								<div className='list-header'>{list.title}</div>
+								{list.cards && list.cards.length > 0 && (
+									<div className='card-container'>
+										{list.cards.map((card: Card) => {
+											return (
+												<div key={card.id} className='card'>
+													{card.title}
+												</div>
+											);
+										})}
+									</div>
+								)}
+								<CardComposer listId={list.id} />
+							</div>
 						</div>
-						<div className='card'>card 2</div>
-						<div className='card'>card 3</div>
-						<div className='card'>card 4</div>
-						<div className='card'>card 5</div>
-						<div className='card'>card 6</div>
-						<div className='card'>card 7</div>
-						<div className='card'>card 8</div>
-					</div>
-					<CardComposer />
-				</div>
-			</div>
-			<div className='list-wrapper'>
-				<div className='list-content'>
-					<div className='list-header'>list 1</div>
-
-					<CardComposer />
-				</div>
-			</div>
-
-			<div className='list-wrapper'>
-				<div className='list-content'>
-					<div className='list-header'>list 1</div>
-					<div className='card-container'>
-						<div className='card'>card 1</div>
-						<div className='card'>card 2</div>
-						<div className='card'>card 3</div>
-						<div className='card'>card 4</div>
-						<div className='card'>card 5</div>
-						<div className='card'>card 6</div>
-						<div className='card'>card 7</div>
-						<div className='card'>card 8</div>
-					</div>
-					<CardComposer />
-				</div>
-			</div>
-			<div className='list-wrapper'>
-				<div className='list-content'>
-					<div className='list-header'>list 1</div>
-					<div className='card-container'>
-						<div className='card'>card 1</div>
-						<div className='card'>card 2</div>
-						<div className='card'>card 3</div>
-						<div className='card'>card 4</div>
-						<div className='card'>card 5</div>
-						<div className='card'>card 6</div>
-						<div className='card'>card 7</div>
-						<div className='card'>card 8</div>
-						<div className='card'>card 1</div>
-						<div className='card'>card 2</div>
-						<div className='card'>card 3</div>
-						<div className='card'>card 4</div>
-						<div className='card'>card 5</div>
-						<div className='card'>card 6</div>
-						<div className='card'>card 7</div>
-						<div className='card'>card 3</div>
-						<div className='card'>card 4</div>
-						<div className='card'>card 5</div>
-						<div className='card'>card 6</div>
-						<div className='card'>card 7</div>
-					</div>
-					<CardComposer />
-				</div>
-			</div>
+					);
+				})}
 
 			<div className='list-wrapper'>
 				<ListComposer />

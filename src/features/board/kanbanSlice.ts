@@ -8,11 +8,31 @@ export type BoardMember = {
 	boardMemberId: number;
 };
 
+export type Card = {
+	id: number;
+	title: string;
+	duedate: Date | null;
+	description: string | null;
+	order: number | null;
+	listId: number;
+	labels: any[];
+	checklists: any[];
+	comments: any[];
+};
+
+export type List = {
+	id: number;
+	order: number | null;
+	title: string;
+	boardId: number;
+	cards: Card[];
+};
+
 type Board = {
 	id: number;
 	title: string;
 	ownerId: number;
-	lists: any[];
+	lists: List[];
 	members: BoardMember[];
 };
 
@@ -126,6 +146,50 @@ export const inviteMembersToBoard = createAsyncThunk(
 	}
 );
 
+// ! List and Card -> CRUD OPERATIONS
+
+export const addCard = createAsyncThunk(
+	'board/addCard',
+	async (
+		{ listId, cardTitle }: { listId: number; cardTitle: string },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.addCard(listId, cardTitle, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+export const addList = createAsyncThunk(
+	'board/addList',
+	async (
+		{
+			boardId,
+			listTitle,
+		}: { boardId: number | string | undefined; listTitle: string },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.addList(boardId, listTitle, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+
+// ! List and Card -> CRUD OPERATIONS
+
 export const board = createSlice({
 	name: 'board',
 	initialState,
@@ -170,6 +234,25 @@ export const board = createSlice({
 				action.payload.forEach((member: BoardMember) => {
 					state.board.members.push(member);
 				});
+			}
+		});
+
+		// * Kanban Card and List => CRUD
+
+		builder.addCase(addCard.fulfilled, (state, action) => {
+			if (action.payload) {
+				const foundList = state.board.lists.find(
+					(l: List) => l.id === action.payload.listId
+				);
+
+				if (foundList) {
+					foundList.cards.push(action.payload);
+				}
+			}
+		});
+		builder.addCase(addList.fulfilled, (state, action) => {
+			if (action.payload) {
+				state.board.lists.push(action.payload);
 			}
 		});
 	},

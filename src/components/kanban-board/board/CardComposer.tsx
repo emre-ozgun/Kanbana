@@ -1,9 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { useAppDispatch } from '../../../hooks';
+import { addCard } from '../../../features/board/kanbanSlice';
 import useOnClickOutside from '../../../utils/useClickOutside';
 import './CardComposer.css';
 
-const CardComposer = () => {
+type CardComposerProps = {
+	listId: number;
+};
+
+const CardComposer = ({ listId }: CardComposerProps) => {
+	const dispatch = useAppDispatch();
+
 	const [isCardComposerOpen, setIsCardComposerOpen] = useState(false);
+
+	const [cardTitle, setCardTite] = useState('');
 
 	const cardComposerRef = useRef<null | HTMLDivElement>(null);
 	const cardComposerInputRef = useRef<null | HTMLTextAreaElement>(null);
@@ -18,6 +28,19 @@ const CardComposer = () => {
 		}
 	}, [isCardComposerOpen]);
 
+	const handleAddCard = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		if (cardTitle) {
+			console.log(cardTitle);
+
+			dispatch(addCard({ listId, cardTitle }));
+			setCardTite('');
+			setIsCardComposerOpen(false);
+		} else {
+			return;
+		}
+	};
+
 	if (isCardComposerOpen) {
 		return (
 			<div
@@ -26,15 +49,23 @@ const CardComposer = () => {
 				}`}
 				ref={cardComposerRef}
 			>
-				<form className='list-composer__form'>
+				<form
+					className='list-composer__form'
+					onSubmit={(e) => handleAddCard(e)}
+				>
 					<textarea
 						ref={cardComposerInputRef}
 						placeholder='Enter a title for this card...'
 						className='card-composer__form-textarea'
+						value={cardTitle}
+						onChange={(e) => setCardTite(e.target.value)}
 					/>
 					<div className='list-composer__cta'>
-						<button className='list-composer__cta-btn'>Add Card</button>
+						<button type='submit' className='list-composer__cta-btn'>
+							Add Card
+						</button>
 						<button
+							type='button'
 							onClick={() => setIsCardComposerOpen(false)}
 							className='list-composer__cta-btn-close'
 						>
