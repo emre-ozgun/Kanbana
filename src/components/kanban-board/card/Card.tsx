@@ -1,4 +1,11 @@
+import React from 'react';
 import { Card } from '../../../features/board/kanbanSlice';
+import {
+	MdSubject,
+	MdOutlineAccessTime,
+	MdOutlineModeComment,
+	MdOutlineCheckBox,
+} from 'react-icons/md';
 import './Card.css';
 
 type CardPropsType = {
@@ -22,8 +29,14 @@ const KanbanCard = ({ card }: CardPropsType) => {
 					})}
 			</div>
 			{card.title}
+			<div className='card-badges'>
+				{/* description */}
+				{/* duedate */}
+				{/* comment */}
+				{/* checklist */}
+			</div>
 		</div>
 	);
 };
 
-export default KanbanCard;
+export default React.memo(KanbanCard);

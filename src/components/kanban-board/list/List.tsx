@@ -1,3 +1,4 @@
+import React from 'react';
 import { List, Card } from '../../../features/board/kanbanSlice';
 import CardComposer from '../board/CardComposer';
 import KanbanCard from '../card/Card';
@@ -24,4 +25,4 @@ const KanbanList = ({ list }: ListPropsType) => {
 	);
 };
 
-export default KanbanList;
+export default React.memo(KanbanList);
