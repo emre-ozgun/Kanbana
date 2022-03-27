@@ -3,6 +3,7 @@ import authReducer from './features/auth/authSlice';
 import boardListReducer from './features/boardList/boardSlice';
 import boardReducer from './features/board/kanbanSlice';
 import userListReducer from './features/userList/userListSlice';
+import cardReducer from './features/cardEdit/cardSlice';
 // ...
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
 		boardList: boardListReducer,
 		board: boardReducer,
 		userList: userListReducer,
+		card: cardReducer,
 	},
 });
 

@@ -33,6 +33,7 @@
 
 .card-badges {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .badge {

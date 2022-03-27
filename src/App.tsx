@@ -39,14 +39,8 @@ const App = () => {
 					}
 				/>
 
-				<Route
-					path='/card/:cardId'
-					element={
-						<RequireAuth>
-							<EditCardModalPage />
-						</RequireAuth>
-					}
-				/>
+				<Route path='/card/:cardId' element={<EditCardModalPage />} />
+				<Route />
 
 				<Route path='/*' element={<NotFound />} />
 			</Routes>

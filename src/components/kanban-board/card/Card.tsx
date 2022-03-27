@@ -45,20 +45,24 @@ const KanbanCard = ({ card }: CardPropsType) => {
 					<span className='badge-icon'>
 						<div className='badge-icon-text'>
 							<MdOutlineAccessTime />
+							{/* this shall be formated -> dd/mm */}
 							<span>27 Mar</span>
 						</div>
 					</span>
 				</div>
 
-				<div className='badge'>
-					<span className='badge-icon'>
-						<div className='badge-icon-text'>
-							<MdOutlineModeComment />
-							<span className='badge-text'>2</span>
-						</div>
-					</span>
-				</div>
+				{card.comments.length > 0 && (
+					<div className='badge'>
+						<span className='badge-icon'>
+							<div className='badge-icon-text'>
+								<MdOutlineModeComment />
+								<span className='badge-text'>{card.comments.length}</span>
+							</div>
+						</span>
+					</div>
+				)}
 
+				{/* checklist logic -> completed / total and if completed === total -. classList += badge-is-complete */}
 				<div className='badge'>
 					<span className='badge-icon badge-is-complete'>
 						<div className='badge-icon-text'>
@@ -67,9 +71,6 @@ const KanbanCard = ({ card }: CardPropsType) => {
 						</div>
 					</span>
 				</div>
-				{/* duedate */}
-				{/* comment */}
-				{/* checklist */}
 			</div>
 		</div>
 	);
