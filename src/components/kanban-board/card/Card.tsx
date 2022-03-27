@@ -7,6 +7,7 @@ import {
 	MdOutlineCheckBox,
 } from 'react-icons/md';
 import './Card.css';
+import { formatDate } from '../../../utils/formatDate';
 
 type CardPropsType = {
 	card: Card;
@@ -41,15 +42,17 @@ const KanbanCard = ({ card }: CardPropsType) => {
 					</div>
 				)}
 
-				<div className='badge'>
-					<span className='badge-icon'>
-						<div className='badge-icon-text'>
-							<MdOutlineAccessTime />
-							{/* this shall be formated -> dd/mm */}
-							<span>27 Mar</span>
-						</div>
-					</span>
-				</div>
+				{card.duedate && (
+					<div className='badge'>
+						<span className='badge-icon'>
+							<div className='badge-icon-text'>
+								<MdOutlineAccessTime />
+								{/* this shall be formated -> dd/mm */}
+								<span>{formatDate(card.duedate)}</span>
+							</div>
+						</span>
+					</div>
+				)}
 
 				{card.comments.length > 0 && (
 					<div className='badge'>

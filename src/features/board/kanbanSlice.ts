@@ -11,7 +11,7 @@ export type BoardMember = {
 export type Card = {
 	id: number;
 	title: string;
-	duedate: Date | null;
+	duedate: null | string;
 	description: string | null;
 	order: number | null;
 	listId: number;

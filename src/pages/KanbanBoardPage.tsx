@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import KanbanNav from '../components/kanban-board/nav/Navbar';
 import KanbanBoard from '../components/kanban-board/board/Board';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { getBoard, selectBoard } from '../features/board/kanbanSlice';
 
@@ -25,8 +25,6 @@ const KanbanBoardPage = () => {
 		};
 	}, []);
 
-	console.log(board.lists);
-
 	return (
 		<>
 			<KanbanNav
@@ -38,6 +36,7 @@ const KanbanBoardPage = () => {
 				}}
 			/>
 			<KanbanBoard lists={board.lists} />
+			<Outlet />
 		</>
 	);
 };

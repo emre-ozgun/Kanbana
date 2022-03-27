@@ -10,8 +10,6 @@ type ListType = {
 };
 
 const Board = ({ lists }: ListType) => {
-	console.log(lists);
-
 	return (
 		<main className='board'>
 			{lists &&

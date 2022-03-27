@@ -13,12 +13,12 @@ const initialState = {
 
 export const getCard = createAsyncThunk(
 	'card/getCard',
-	async (boardTitle: string, thunkApi) => {
+	async (cardId: string | number | undefined, thunkApi) => {
 		const { auth } = thunkApi.getState() as RootState;
 		const token = auth.user?.token;
 
 		try {
-			return await cardService.getCard();
+			return await cardService.getCard(cardId, token);
 		} catch (error) {
 			return thunkApi.rejectWithValue('There was an error...');
 		}

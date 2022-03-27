@@ -34,6 +34,7 @@ const getBoard = async (
 								labels: card.labels,
 								checklists: card.checklists,
 								comments: card.comments,
+								duedate: card.duedate,
 							};
 					  })
 					: [],
