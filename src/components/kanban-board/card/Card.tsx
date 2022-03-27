@@ -1,11 +1,29 @@
 import { Card } from '../../../features/board/kanbanSlice';
+import './Card.css';
 
 type CardPropsType = {
 	card: Card;
 };
 
 const KanbanCard = ({ card }: CardPropsType) => {
-	return <div className='card'>{card.title}</div>;
+	return (
+		<div className='card'>
+			<div className='card-labels'>
+				{card.labels &&
+					card.labels.length > 0 &&
+					card.labels.map((label: any) => {
+						return (
+							<span
+								className='card-label'
+								key={label.id}
+								style={{ backgroundColor: `${label.color}` }}
+							></span>
+						);
+					})}
+			</div>
+			{card.title}
+		</div>
+	);
 };
 
 export default KanbanCard;

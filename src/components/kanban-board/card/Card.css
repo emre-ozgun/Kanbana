@@ -1,0 +1,25 @@
+.card-labels {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.card-label {
+	height: 6px;
+	width: 40px;
+	max-width: 40px;
+	min-width: 40px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-o-border-radius: 4px;
+	margin-right: 4px;
+	margin-bottom: 4px;
+}
+.card-label.red {
+	background-color: red;
+}
+.card-label.grey {
+	background-color: gray;
+}
