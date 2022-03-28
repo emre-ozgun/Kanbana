@@ -41,6 +41,22 @@ export const getCard = createAsyncThunk(
 		}
 	}
 );
+export const updateCardTitle = createAsyncThunk(
+	'card/updateCardTitle',
+	async (
+		{ cardId, newTitle }: { cardId: number; newTitle: string },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await cardService.updateCardTitle(cardId, newTitle, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue('There was an error...');
+		}
+	}
+);
 
 export const card = createSlice({
 	name: 'card',
@@ -63,6 +79,11 @@ export const card = createSlice({
 
 			if (action.payload !== null) {
 				state.card = action.payload;
+			}
+		});
+		builder.addCase(updateCardTitle.fulfilled, (state, action) => {
+			if (action.payload) {
+				state.card.title = action.payload;
 			}
 		});
 	},

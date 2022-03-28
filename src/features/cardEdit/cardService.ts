@@ -30,8 +30,29 @@ const getCard = async (
 	return composedCard;
 };
 
+const updateCardTitle = async (
+	cardId: number,
+	newTitle: string,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	const { data } = await axios.put(
+		`${baseUrl}/card/${cardId}`,
+		{ title: newTitle },
+		config
+	);
+
+	return data.title;
+};
+
 const cardService = {
 	getCard,
+	updateCardTitle,
 };
 
 export default cardService;

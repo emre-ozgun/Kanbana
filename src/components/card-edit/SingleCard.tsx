@@ -4,13 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCard } from '../../features/cardEdit/cardSlice';
 import useOnClickOutside from '../../utils/useClickOutside';
 import { selectCard } from '../../features/cardEdit/cardSlice';
-
+import Spinner from '../spinner/Spinner';
+import CardHeader from './CardHeader';
 import './SingleCard.css';
 
 const SingleCard = () => {
 	const dispatch = useAppDispatch();
-	const card = useAppSelector(selectCard);
-	const { cardId } = useParams();
+	const { card, isLoading, isSuccess } = useAppSelector(selectCard);
+	const { cardId, listId } = useParams();
 	const navigate = useNavigate();
 	const cardRef = useRef<null | HTMLDivElement>(null);
 	useOnClickOutside(cardRef, () => navigate(-1));
@@ -24,12 +25,22 @@ const SingleCard = () => {
 	return (
 		<div className='overlay'>
 			<main className='single-card' ref={cardRef}>
-				{/* <SingeCardTitle title={card.title}/> */}
-				<header className='single-card__title'></header>
-				<section className='single-card__container'>
-					<article className='single-card-main'></article>
-					<aside className='single-card-sidebar'></aside>
-				</section>
+				{isLoading && (
+					<div className='single-card-spinner'>
+						<Spinner />
+					</div>
+				)}
+
+				{isSuccess && (
+					<>
+						<CardHeader title={card.title} cardId={card.id} listId={listId} />
+
+						<section className='single-card__container'>
+							<article className='single-card-main'></article>
+							<aside className='single-card-sidebar'></aside>
+						</section>
+					</>
+				)}
 			</main>
 		</div>
 	);

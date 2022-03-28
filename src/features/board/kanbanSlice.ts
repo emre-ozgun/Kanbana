@@ -197,6 +197,19 @@ export const board = createSlice({
 		clear: (state) => {
 			state = initialState;
 		},
+		updateBoardCardTitle: (state, action) => {
+			const kList = state.board.lists.find(
+				(l: List) => l.id === Number(action.payload.listId)
+			);
+
+			const kCard = kList?.cards.find(
+				(c: Card) => c.id === action.payload.cardId
+			);
+
+			if (kCard) {
+				kCard.title = action.payload.titleEdit;
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getBoard.pending, (state) => {});
@@ -258,7 +271,7 @@ export const board = createSlice({
 	},
 });
 
-export const { clear } = board.actions;
+export const { clear, updateBoardCardTitle } = board.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectBoard = (state: RootState) => state.board;
