@@ -1,6 +1,6 @@
+import React from 'react';
 import ListComposer from './ListComposer';
-import CardComposer from './CardComposer';
-import { Card, List } from '../../../features/board/kanbanSlice';
+import { List } from '../../../features/board/kanbanSlice';
 import KanbanList from '../list/List';
 
 import './Board.css';
@@ -25,4 +25,4 @@ const Board = ({ lists }: ListType) => {
 	);
 };
 
-export default Board;
+export default React.memo(Board);

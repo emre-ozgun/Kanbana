@@ -40,7 +40,7 @@ const App = () => {
 					}
 				>
 					<Route
-						path='/board/:boardId/card/:cardId'
+						path='/board/:boardId/list/:listId/card/:cardId'
 						element={<EditCardModalPage />}
 					/>
 				</Route>

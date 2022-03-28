@@ -11,6 +11,7 @@ const KanbanList = ({ list }: ListPropsType) => {
 	return (
 		<div className='list-wrapper'>
 			<div className='list-content'>
+				{/* <ListHeader/> */}
 				<div className='list-header'>{list.title}</div>
 				{list.cards && list.cards.length > 0 && (
 					<div className='card-container'>

@@ -1,7 +1,8 @@
 import React from 'react';
+import SingleCard from '../components/card-edit/SingleCard';
 
 const EditCardModalPage = () => {
-	return <div className='overlay'></div>;
+	return <SingleCard />;
 };
 
 export default EditCardModalPage;

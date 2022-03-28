@@ -1,0 +1,33 @@
+.overlay {
+	display: flex;
+	align-items: flex-start;
+	background-color: #000000a3;
+	/* display: none; */
+	height: 100%;
+	justify-content: center;
+	left: 0;
+	overflow-y: auto;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 20;
+}
+
+.single-card {
+	margin-top: 4rem;
+	width: 100%;
+	max-width: 768px;
+	height: 500px;
+	border-radius: 3px;
+	background-color: #fff;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+}
+
+@media screen and (max-width: 768px) {
+	.single-card {
+		margin: 3rem 0.66rem;
+	}
+}

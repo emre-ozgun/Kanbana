@@ -1,12 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { Card } from '../board/kanbanSlice';
 
 import type { RootState } from '../../store';
 import cardService from './cardService';
 
-// TYPE CARD!
+type CardStateType = {
+	card: Card;
+	isLoading: boolean;
+	isSuccess: boolean;
+};
 
-const initialState = {
-	card: {},
+const initialCardState: Card = {
+	id: 0,
+	title: '',
+	duedate: null,
+	description: null,
+	order: null,
+	listId: 0,
+	labels: [],
+	checklists: [],
+	comments: [],
+};
+
+const initialState: CardStateType = {
+	card: initialCardState,
 	isLoading: false,
 	isSuccess: false,
 };
@@ -30,7 +47,7 @@ export const card = createSlice({
 	initialState,
 	reducers: {
 		clearCard: (state) => {
-			state.card = {};
+			state.card = initialCardState;
 			state.isLoading = false;
 
 			state.isSuccess = false;
@@ -39,6 +56,14 @@ export const card = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getCard.pending, (state) => {
 			state.isLoading = true;
+		});
+		builder.addCase(getCard.fulfilled, (state, action) => {
+			state.isLoading = false;
+			state.isSuccess = true;
+
+			if (action.payload !== null) {
+				state.card = action.payload;
+			}
 		});
 	},
 });

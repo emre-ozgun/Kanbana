@@ -4,7 +4,6 @@ import {
 	MdSubject,
 	MdOutlineAccessTime,
 	MdOutlineModeComment,
-	MdOutlineCheckBox,
 } from 'react-icons/md';
 import Checklist from './Checklist';
 import './Card.css';
@@ -18,11 +17,9 @@ type CardPropsType = {
 const KanbanCard = ({ card }: CardPropsType) => {
 	const { boardId } = useParams();
 
-	console.log(card.checklists);
-
 	return (
-		<div className='card'>
-			<Link to={`/board/${boardId}/card/${card.id}`}>
+		<Link to={`/board/${boardId}/list/${card.listId}/card/${card.id}`}>
+			<div className='card'>
 				<div className='card-labels'>
 					{card.labels &&
 						card.labels.length > 0 &&
@@ -76,8 +73,8 @@ const KanbanCard = ({ card }: CardPropsType) => {
 						<Checklist checklists={card.checklists} />
 					)}
 				</div>
-			</Link>
-		</div>
+			</div>
+		</Link>
 	);
 };
 
