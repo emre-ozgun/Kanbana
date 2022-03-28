@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MdOutlineCreditCard } from 'react-icons/md';
-import { useAppDispatch } from '../../hooks';
-import { updateCardTitle } from '../../features/cardEdit/cardSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { updateCardTitle, selectCard } from '../../features/cardEdit/cardSlice';
 import { updateBoardCardTitle } from '../../features/board/kanbanSlice';
 import './SingleCard.css';
 
@@ -13,6 +13,7 @@ type CardHeaderPropsType = {
 
 const CardHeader = ({ title, cardId, listId }: CardHeaderPropsType) => {
 	const dispatch = useAppDispatch();
+	const { updatePending } = useAppSelector(selectCard);
 	const [cartTitleEdit, setCartTitleEdit] = useState(false);
 
 	const [titleEdit, setTitleEdit] = useState('');
@@ -60,7 +61,7 @@ const CardHeader = ({ title, cardId, listId }: CardHeaderPropsType) => {
 					className='single-card__title-text'
 					onClick={() => setCartTitleEdit(true)}
 				>
-					<h3>{title}</h3>
+					{updatePending ? <h3>{titleEdit}</h3> : <h3>{title}</h3>}
 				</div>
 			)}
 		</section>

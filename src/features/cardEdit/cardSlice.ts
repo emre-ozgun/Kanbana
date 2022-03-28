@@ -8,6 +8,7 @@ type CardStateType = {
 	card: Card;
 	isLoading: boolean;
 	isSuccess: boolean;
+	updatePending: boolean;
 };
 
 const initialCardState: Card = {
@@ -26,6 +27,7 @@ const initialState: CardStateType = {
 	card: initialCardState,
 	isLoading: false,
 	isSuccess: false,
+	updatePending: false,
 };
 
 export const getCard = createAsyncThunk(
@@ -85,6 +87,9 @@ export const card = createSlice({
 			if (action.payload) {
 				state.card.title = action.payload;
 			}
+		});
+		builder.addCase(updateCardTitle.pending, (state, _) => {
+			state.updatePending = true;
 		});
 	},
 });
