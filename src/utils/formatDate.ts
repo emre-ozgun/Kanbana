@@ -16,8 +16,6 @@ export const formatDate = (dateStr: string) => {
 
 	const dateFields = dateStr.split('-');
 
-	console.log(dateFields);
-
 	const day = dateFields[2];
 	const month = months[Number(dateFields[1]) - 1];
 

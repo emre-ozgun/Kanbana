@@ -30,6 +30,7 @@ const App = () => {
 						</RequireAuth>
 					}
 				/>
+
 				<Route
 					path='/board/:boardId'
 					element={
@@ -37,10 +38,26 @@ const App = () => {
 							<KanbanBoardPage />
 						</RequireAuth>
 					}
-				/>
+				>
+					<Route
+						path='/board/:boardId/card/:cardId'
+						element={<EditCardModalPage />}
+					/>
+				</Route>
 
-				<Route path='/card/:cardId' element={<EditCardModalPage />} />
-				<Route />
+				{/* <Route
+					path='/board/:boardId'
+					element={
+						<RequireAuth>
+							<KanbanBoardPage />
+						</RequireAuth>
+					}
+				/>
+				
+				<Route
+					path='/board/:boardId/card/:cardId'
+					element={<EditCardModalPage />}
+			  /> */}
 
 				<Route path='/*' element={<NotFound />} />
 			</Routes>
