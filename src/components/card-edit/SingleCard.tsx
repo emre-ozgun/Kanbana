@@ -1,14 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCard } from '../../features/cardEdit/cardSlice';
+import { getCard, clearCard } from '../../features/cardEdit/cardSlice';
 import useOnClickOutside from '../../utils/useClickOutside';
 import { selectCard } from '../../features/cardEdit/cardSlice';
 import Spinner from '../spinner/Spinner';
 import CardHeader from './CardHeader';
-import './SingleCard.css';
 import CardDescription from './CardDescription';
 import CardComment from './CardComment';
+
+import './SingleCard.css';
 
 const SingleCard = () => {
 	const dispatch = useAppDispatch();
@@ -20,6 +21,10 @@ const SingleCard = () => {
 
 	useEffect(() => {
 		dispatch(getCard(cardId));
+
+		return () => {
+			dispatch(clearCard());
+		};
 	}, [dispatch, cardId]);
 
 	console.log({ description: card.description });
@@ -63,4 +68,4 @@ const SingleCard = () => {
 	);
 };
 
-export default SingleCard;
+export default React.memo(SingleCard);
