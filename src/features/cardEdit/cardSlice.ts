@@ -59,6 +59,29 @@ export const updateCardTitle = createAsyncThunk(
 		}
 	}
 );
+export const updateCardDescription = createAsyncThunk(
+	'card/updateCardDescription',
+	async (
+		{
+			cardId,
+			newDescription,
+		}: { cardId: number; newDescription: string | null },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await cardService.updateCardDescription(
+				cardId,
+				newDescription,
+				token
+			);
+		} catch (error) {
+			return thunkApi.rejectWithValue('There was an error...');
+		}
+	}
+);
 
 export const card = createSlice({
 	name: 'card',
@@ -87,9 +110,18 @@ export const card = createSlice({
 			if (action.payload) {
 				state.card.title = action.payload;
 			}
+			state.updatePending = false;
 		});
 		builder.addCase(updateCardTitle.pending, (state, _) => {
 			state.updatePending = true;
+		});
+
+		builder.addCase(updateCardDescription.fulfilled, (state, action) => {
+			if (typeof action.payload === 'string') {
+				state.card.description = action.payload;
+			} else {
+				state.card.description = null;
+			}
 		});
 	},
 });

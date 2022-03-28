@@ -7,6 +7,8 @@ import { selectCard } from '../../features/cardEdit/cardSlice';
 import Spinner from '../spinner/Spinner';
 import CardHeader from './CardHeader';
 import './SingleCard.css';
+import CardDescription from './CardDescription';
+import CardComment from './CardComment';
 
 const SingleCard = () => {
 	const dispatch = useAppDispatch();
@@ -20,7 +22,7 @@ const SingleCard = () => {
 		dispatch(getCard(cardId));
 	}, [dispatch, cardId]);
 
-	// console.log(card);
+	console.log({ description: card.description });
 
 	return (
 		<div className='overlay'>
@@ -36,8 +38,23 @@ const SingleCard = () => {
 						<CardHeader title={card.title} cardId={card.id} listId={listId} />
 
 						<section className='single-card__container'>
-							<article className='single-card-main'></article>
-							<aside className='single-card-sidebar'></aside>
+							<article className='single-card-main'>
+								<CardDescription
+									description={card.description}
+									listId={listId}
+									cardId={card.id}
+								/>
+								<CardComment comments={card.comments} listId={listId} />
+							</article>
+							<aside className='single-card-sidebar'>
+								<h4>Add to card</h4>
+								<div className='separator'></div>
+								<div className='single-card-sidebar__cta'>
+									<div>Labels</div>
+									<div>Checklist</div>
+									<div>Dates</div>
+								</div>
+							</aside>
 						</section>
 					</>
 				)}
@@ -46,4 +63,4 @@ const SingleCard = () => {
 	);
 };
 
-export default React.memo(SingleCard);
+export default SingleCard;
