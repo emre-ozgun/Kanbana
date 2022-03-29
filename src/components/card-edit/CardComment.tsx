@@ -51,6 +51,12 @@ const CardComment = ({
 		}
 	};
 
+	const sortedComments = React.useMemo(() => {
+		return [...comments].sort(
+			(a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
+		);
+	}, [comments]);
+
 	return (
 		<>
 			<section className='single-card__title'>
@@ -98,9 +104,9 @@ const CardComment = ({
 					</div>
 				</div>
 			</section>
-			{comments &&
-				comments.length > 1 &&
-				comments.map((comment: any) => {
+			{sortedComments &&
+				sortedComments.length > 1 &&
+				sortedComments.map((comment: any) => {
 					return (
 						<section className='single-card__comment' key={comment.id}>
 							<div
