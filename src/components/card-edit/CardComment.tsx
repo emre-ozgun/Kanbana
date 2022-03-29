@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MdOutlineModeComment } from 'react-icons/md';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { addCardComment } from '../../features/cardEdit/cardSlice';
-import { addBoardCardComment } from '../../features/board/kanbanSlice';
+import {
+	addCardComment,
+	deleteCardComment,
+} from '../../features/cardEdit/cardSlice';
+import {
+	addBoardCardComment,
+	deleteBoardCardComment,
+} from '../../features/board/kanbanSlice';
 import { selectAuth } from '../../features/auth/authSlice';
 import bannerUtil from '../../utils/userBannerGenerator';
 import useOnClickOutside from '../../utils/useClickOutside';
@@ -49,6 +55,11 @@ const CardComment = ({
 			setComment('');
 			setCommentOpen(false);
 		}
+	};
+
+	const handleDeleteComment = (commentId: number) => {
+		dispatch(deleteCardComment(commentId));
+		dispatch(deleteBoardCardComment({ listId, cardId }));
 	};
 
 	const sortedComments = React.useMemo(() => {
@@ -105,7 +116,7 @@ const CardComment = ({
 				</div>
 			</section>
 			{sortedComments &&
-				sortedComments.length > 1 &&
+				sortedComments.length > 0 &&
 				sortedComments.map((comment: any) => {
 					return (
 						<section className='single-card__comment' key={comment.id}>
@@ -135,7 +146,12 @@ const CardComment = ({
 									</small>
 								</div>
 								<div className='comment-readonly'>{comment.message}</div>
-								<small className='comment-delete-btn'>Delete</small>
+								<small
+									className='comment-delete-btn'
+									onClick={() => handleDeleteComment(comment.id)}
+								>
+									Delete
+								</small>
 							</div>
 						</section>
 					);

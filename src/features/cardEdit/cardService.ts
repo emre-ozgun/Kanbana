@@ -95,13 +95,19 @@ const addCardComment = async (
 	return cardComment;
 };
 
-const deleteCardComment = async ({
-	commentId,
-	token,
-}: {
-	commentId: number;
-	token: string | undefined;
-}) => {};
+const deleteCardComment = async (
+	commentId: number,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+	await axios.delete(`${baseUrl}/comment/${commentId}`, config);
+
+	return commentId;
+};
 
 const cardService = {
 	getCard,

@@ -99,6 +99,19 @@ export const addCardComment = createAsyncThunk(
 		}
 	}
 );
+export const deleteCardComment = createAsyncThunk(
+	'card/deleteCardComment',
+	async (commentId: number, thunkApi) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await cardService.deleteCardComment(commentId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue('There was an error...');
+		}
+	}
+);
 
 export const card = createSlice({
 	name: 'card',
@@ -145,11 +158,11 @@ export const card = createSlice({
 				state.card.comments.push(action.payload);
 			}
 		});
-		// builder.addCase(deleteCardComment.fulfilled, (state, action) => {
-
-		// 	// filter out comment with id (action.payload)
-
-		// });
+		builder.addCase(deleteCardComment.fulfilled, (state, action) => {
+			state.card.comments = state.card.comments.filter(
+				(c: any) => c.id !== action.payload
+			);
+		});
 	},
 });
 

@@ -311,6 +311,7 @@ export const {
 	updateBoardCardTitle,
 	updateBoardCardDescription,
 	addBoardCardComment,
+	deleteBoardCardComment,
 } = board.actions;
 
 // Other code such as selectors can use the imported `RootState` type
