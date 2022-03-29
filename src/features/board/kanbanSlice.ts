@@ -223,6 +223,28 @@ export const board = createSlice({
 				kCard.description = action.payload.descriptionText;
 			}
 		},
+		addBoardCardComment: (state, action) => {
+			const kList = state.board.lists.find(
+				(l: List) => l.id === Number(action.payload.listId)
+			);
+			const kCard = kList?.cards.find(
+				(c: Card) => c.id === action.payload.cardId
+			);
+			if (kCard) {
+				kCard.comments.push(true);
+			}
+		},
+		deleteBoardCardComment: (state, action) => {
+			const kList = state.board.lists.find(
+				(l: List) => l.id === Number(action.payload.listId)
+			);
+			const kCard = kList?.cards.find(
+				(c: Card) => c.id === action.payload.cardId
+			);
+			if (kCard) {
+				kCard.comments.pop();
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getBoard.pending, (state) => {});
@@ -284,8 +306,12 @@ export const board = createSlice({
 	},
 });
 
-export const { clear, updateBoardCardTitle, updateBoardCardDescription } =
-	board.actions;
+export const {
+	clear,
+	updateBoardCardTitle,
+	updateBoardCardDescription,
+	addBoardCardComment,
+} = board.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectBoard = (state: RootState) => state.board;

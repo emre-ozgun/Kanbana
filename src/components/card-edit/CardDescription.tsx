@@ -35,6 +35,7 @@ const CardDescription = ({
 	useEffect(() => {
 		if (descriptionEditing) {
 			textareaRef?.current?.focus();
+			textareaRef?.current?.select();
 		}
 
 		if (description) {

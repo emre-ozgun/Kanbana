@@ -27,8 +27,6 @@ const SingleCard = () => {
 		};
 	}, [dispatch, cardId]);
 
-	console.log({ description: card.description });
-
 	return (
 		<div className='overlay'>
 			<main className='single-card' ref={cardRef}>
@@ -49,7 +47,11 @@ const SingleCard = () => {
 									listId={listId}
 									cardId={card.id}
 								/>
-								<CardComment comments={card.comments} listId={listId} />
+								<CardComment
+									comments={card.comments}
+									listId={listId}
+									cardId={card.id}
+								/>
 							</article>
 							<aside className='single-card-sidebar'>
 								<h4>Add to card</h4>

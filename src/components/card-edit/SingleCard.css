@@ -66,8 +66,6 @@
 	-o-border-radius: 3px;
 }
 
-/* * card container flex */
-
 .single-card__title-text > h2 {
 	font-size: 20px;
 }
@@ -82,6 +80,7 @@
 	width: 100%;
 	height: 100%;
 }
+/* * card container flex */
 
 .single-card__container {
 	display: flex;
@@ -194,6 +193,148 @@
 .description-btn-close > svg {
 	font-size: 1rem;
 }
+
+/* * card comment */
+
+.single-card__comment {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+	margin: 18px 40px 18px 56px;
+	min-height: 32px;
+}
+
+.single-card__comment-banner {
+	align-self: flex-start;
+	width: 24px;
+	height: 24px;
+	display: grid;
+	place-items: center;
+	font-weight: 600;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+}
+
+.single-card__comment-add {
+	align-self: center;
+	width: 100%;
+	color: #172b4d;
+	cursor: pointer;
+	min-height: 36px;
+	height: auto;
+}
+.single-card__comment-add > textarea {
+	width: 100%;
+	padding: 8px 12px;
+	height: 100%;
+	font-family: inherit;
+	resize: none;
+	outline: none;
+	border: 1px solid rgb(224, 224, 224);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+}
+.single-card__comment-add > textarea:hover {
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-save {
+	display: none;
+}
+
+.comment-save.active {
+	margin-top: 6px;
+	display: flex;
+}
+.comment-save > button {
+	margin-right: 6px;
+	padding: 0.3rem 0.6rem;
+	border-radius: 3px;
+	outline: none;
+	border: none;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	font-weight: 600;
+	cursor: pointer;
+}
+.comment-save > button:hover {
+	opacity: 0.75;
+}
+
+.c-btn-save {
+	background-color: var(--clr-black);
+	color: var(--clr-white-grey);
+}
+.c-btn-close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.comment-wrapper {
+	align-self: flex-start;
+	width: 100%;
+	color: #172b4d;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.25rem;
+}
+.comment-header {
+	display: flex;
+	align-items: center;
+}
+
+.comment-header > h4 {
+	font-size: 14px;
+	font-weight: 700;
+	margin-right: 0.5rem;
+	text-transform: capitalize;
+}
+
+.comment-readonly {
+	padding: 8px 12px;
+	border: 1px solid rgb(224, 224, 224);
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	width: 100%;
+	font-size: 14px;
+}
+
+.comment-header > small {
+	font-size: 12px;
+	color: #5e6c84;
+}
+
+.single-card__comment:last-of-type {
+	margin-bottom: 92px;
+}
+.comment-delete-btn {
+	font-size: 12px;
+	color: #172b4db3;
+
+	text-decoration: underline;
+	cursor: pointer;
+}
+.comment-delete-btn:hover {
+	color: #172b4d;
+}
+
+/* * end of card comment */
 
 @media screen and (max-width: 768px) {
 	.single-card {
