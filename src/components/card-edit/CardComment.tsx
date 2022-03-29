@@ -4,9 +4,9 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { addCardComment } from '../../features/cardEdit/cardSlice';
 import { addBoardCardComment } from '../../features/board/kanbanSlice';
 import { selectAuth } from '../../features/auth/authSlice';
-import { formatTime } from '../../utils/formatTime';
 import bannerUtil from '../../utils/userBannerGenerator';
 import useOnClickOutside from '../../utils/useClickOutside';
+import Moment from 'react-moment';
 
 type CardDescriptionPropsType = {
 	comments: any[];
@@ -50,8 +50,6 @@ const CardComment = ({
 			setCommentOpen(false);
 		}
 	};
-
-	console.log(comments);
 
 	return (
 		<>
@@ -124,7 +122,11 @@ const CardComment = ({
 							<div className='comment-wrapper'>
 								<div className='comment-header'>
 									<h4>{comment.author.username}</h4>
-									<small>{formatTime(comment.createdAt)}</small>
+									<small>
+										<Moment interval={30000} fromNow>
+											{comment.createdAt}
+										</Moment>
+									</small>
 								</div>
 								<div className='comment-readonly'>{comment.message}</div>
 								<small className='comment-delete-btn'>Delete</small>
