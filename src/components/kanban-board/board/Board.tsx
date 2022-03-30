@@ -4,6 +4,7 @@ import {
 	Card,
 	List,
 	updatePosition,
+	updatePositionDB,
 } from '../../../features/board/kanbanSlice';
 import KanbanList from '../list/List';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -57,6 +58,13 @@ const Board = ({ lists }: ListType) => {
 								cardId: Number(draggableId),
 							})
 						);
+						dispatch(
+							updatePositionDB({
+								updateType: 'within',
+								newPosition: pos / 2,
+								cardId: Number(draggableId),
+							})
+						);
 					}
 				}
 
@@ -70,6 +78,13 @@ const Board = ({ lists }: ListType) => {
 								updateType: 'within',
 								newPosition: pos * 2,
 								listId: Number(destination.droppableId),
+								cardId: Number(draggableId),
+							})
+						);
+						dispatch(
+							updatePositionDB({
+								updateType: 'within',
+								newPosition: pos * 2,
 								cardId: Number(draggableId),
 							})
 						);
@@ -106,6 +121,13 @@ const Board = ({ lists }: ListType) => {
 								updateType: 'within',
 								newPosition: pos,
 								listId: Number(destination.droppableId),
+								cardId: Number(draggableId),
+							})
+						);
+						dispatch(
+							updatePositionDB({
+								updateType: 'within',
+								newPosition: pos,
 								cardId: Number(draggableId),
 							})
 						);

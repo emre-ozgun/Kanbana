@@ -228,6 +228,40 @@ export const addList = createAsyncThunk(
 	}
 );
 
+export type UpdatePositionParamTypes = {
+	updateType: 'within' | 'between' | 'list';
+	newPosition: number;
+	cardId?: number;
+	listId?: number;
+};
+
+export const updatePositionDB = createAsyncThunk(
+	'board/updatePosition',
+	async (
+		{ updateType, newPosition, cardId, listId }: UpdatePositionParamTypes,
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.updatePositionDB(
+				{
+					updateType,
+					newPosition,
+					cardId,
+					listId,
+				},
+				token
+			);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+
 // ! List and Card -> CRUD OPERATIONS
 
 export const board = createSlice({

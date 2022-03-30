@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { List } from './kanbanSlice';
+import { List, UpdatePositionParamTypes } from './kanbanSlice';
 import { BoardMember, Card } from './kanbanSlice';
 
 const baseUrl = process.env.REACT_APP_URL;
@@ -205,6 +205,35 @@ const addList = async (
 	return listState;
 };
 
+const updatePositionDB = async (
+	{ updateType, newPosition, cardId, listId }: UpdatePositionParamTypes,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	if (updateType === 'within') {
+		await axios.put(
+			`${baseUrl}/card/${cardId}`,
+			{ order: newPosition },
+			config
+		);
+		return;
+	}
+
+	if (updateType === 'between') {
+		// source list id -> delete item from source list
+		// destination list id -> insert @ destination list
+	}
+
+	if (updateType === 'list') {
+		// moving lists -> TO BE DISCUSSED
+	}
+};
+
 // ! kanban List and Card => CRUD Operations
 
 const boardService = {
@@ -215,6 +244,7 @@ const boardService = {
 	editBoardTitle,
 	addCard,
 	addList,
+	updatePositionDB,
 };
 
 export default boardService;
