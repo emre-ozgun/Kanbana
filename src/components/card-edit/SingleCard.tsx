@@ -8,6 +8,17 @@ import Spinner from '../spinner/Spinner';
 import CardHeader from './CardHeader';
 import CardDescription from './CardDescription';
 import CardComment from './CardComment';
+import CardLabels from './CardLabels';
+import CardDuedate from './CardDuedate';
+import CardLabelMaker from './CardLabelMaker';
+import CardDateMaker from './CardDateMaker';
+
+import {
+	MdOutlineLabel,
+	MdOutlineCheckBox,
+	MdOutlineAccessTime,
+	MdRemove,
+} from 'react-icons/md';
 
 import './SingleCard.css';
 
@@ -42,6 +53,16 @@ const SingleCard = () => {
 
 						<section className='single-card__container'>
 							<article className='single-card-main'>
+								{(card.labels.length > 0 || card.duedate) && (
+									<section className='single-card-misc'>
+										{card.labels.length > 0 && (
+											<CardLabels labels={card.labels} />
+										)}
+
+										{!card.duedate && <CardDuedate duedate={card.duedate} />}
+									</section>
+								)}
+
 								<CardDescription
 									description={card.description}
 									listId={listId}
@@ -54,12 +75,29 @@ const SingleCard = () => {
 								/>
 							</article>
 							<aside className='single-card-sidebar'>
-								<h4>Add to card</h4>
-								<div className='separator'></div>
+								<h3>Add to card</h3>
+
 								<div className='single-card-sidebar__cta'>
-									<div>Labels</div>
-									<div>Checklist</div>
-									<div>Dates</div>
+									<CardLabelMaker
+										labels={card.labels}
+										cardId={card.id}
+										listId={listId}
+									/>
+									<div className='sidebar-link'>
+										<MdOutlineCheckBox />
+
+										<span>Checklist</span>
+									</div>
+									<div className='sidebar-link'>
+										<MdOutlineAccessTime />
+
+										<span>Dates</span>
+									</div>
+									<div className='sidebar-link delete'>
+										<MdRemove />
+
+										<span>Delete Card</span>
+									</div>
 								</div>
 							</aside>
 						</section>

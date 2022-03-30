@@ -3,7 +3,7 @@ const colors = [
 	'#ff0000',
 	'#800080',
 	'#00ffff',
-	'#dcdcdc',
+	'#cd5c5c',
 	'#ff7f50',
 	'#ff8c00',
 	'#00bfff',

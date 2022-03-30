@@ -245,6 +245,33 @@ export const board = createSlice({
 				kCard.comments.pop();
 			}
 		},
+		addBoardCardLabel: (state, action) => {
+			const kList = state.board.lists.find(
+				(l: List) => l.id === Number(action.payload.listId)
+			);
+			const kCard = kList?.cards.find(
+				(c: Card) => c.id === action.payload.cardId
+			);
+			kCard?.labels.push({
+				id: action.payload.labelId,
+				color: action.payload.color,
+			});
+		},
+		removeBoardCardLabel: (state, action) => {
+			const kList = state.board.lists.find(
+				(l: List) => l.id === Number(action.payload.listId)
+			);
+			const kCard = kList?.cards.find(
+				(c: Card) => c.id === action.payload.cardId
+			);
+			const labelIndex = kCard?.labels.findIndex(
+				(l: any) => l.id === action.payload.labelId
+			);
+			console.log(labelIndex);
+			if (typeof labelIndex === 'number' && labelIndex >= 0) {
+				kCard?.labels.splice(labelIndex, 1);
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getBoard.pending, (state) => {});
@@ -312,6 +339,8 @@ export const {
 	updateBoardCardDescription,
 	addBoardCardComment,
 	deleteBoardCardComment,
+	addBoardCardLabel,
+	removeBoardCardLabel,
 } = board.actions;
 
 // Other code such as selectors can use the imported `RootState` type

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MdOutlineModeComment } from 'react-icons/md';
+import { MdOutlineModeComment, MdClose } from 'react-icons/md';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import {
 	addCardComment,

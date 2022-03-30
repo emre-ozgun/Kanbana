@@ -21,7 +21,6 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
 				<Route path='/auth' element={<AuthPage />} />
-
 				<Route
 					path='/boards'
 					element={
@@ -30,7 +29,6 @@ const App = () => {
 						</RequireAuth>
 					}
 				/>
-
 				<Route
 					path='/board/:boardId'
 					element={
@@ -44,21 +42,7 @@ const App = () => {
 						element={<EditCardModalPage />}
 					/>
 				</Route>
-
-				{/* <Route
-					path='/board/:boardId'
-					element={
-						<RequireAuth>
-							<KanbanBoardPage />
-						</RequireAuth>
-					}
-				/>
-				
-				<Route
-					path='/board/:boardId/card/:cardId'
-					element={<EditCardModalPage />}
-			  /> */}
-
+				$
 				<Route path='/*' element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>

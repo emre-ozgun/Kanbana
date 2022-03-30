@@ -109,12 +109,51 @@ const deleteCardComment = async (
 	return commentId;
 };
 
+const addCardLabel = async (
+	cardId: number,
+	labelId: number,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	await axios.post(`${baseUrl}/card-label`, { cardId, labelId }, config);
+
+	// client-side label synchronization
+	const { data } = await axios.get(`${baseUrl}/card/${cardId}`, config);
+
+	const cardLabelState = data.labels.find((label: any) => label.id === labelId);
+
+	return cardLabelState;
+};
+
+const removeCardLabel = async (
+	cardLabelId: number,
+	labelId: number,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	await axios.delete(`${baseUrl}/card-label/${cardLabelId}`, config);
+
+	return labelId;
+};
+
 const cardService = {
 	getCard,
 	updateCardTitle,
 	updateCardDescription,
 	addCardComment,
 	deleteCardComment,
+	addCardLabel,
+	removeCardLabel,
 };
 
 export default cardService;

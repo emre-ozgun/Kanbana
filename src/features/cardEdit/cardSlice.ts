@@ -113,6 +113,39 @@ export const deleteCardComment = createAsyncThunk(
 	}
 );
 
+export const addCardLabel = createAsyncThunk(
+	'card/addCardLabel',
+	async (
+		{ cardId, labelId }: { cardId: number; labelId: number },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await cardService.addCardLabel(cardId, labelId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue('There was an error...');
+		}
+	}
+);
+export const removeCardLabel = createAsyncThunk(
+	'card/removeCardLabel',
+	async (
+		{ cardLabelId, labelId }: { cardLabelId: number; labelId: number },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await cardService.removeCardLabel(cardLabelId, labelId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue('There was an error...');
+		}
+	}
+);
+
 export const card = createSlice({
 	name: 'card',
 	initialState,
@@ -162,6 +195,18 @@ export const card = createSlice({
 			state.card.comments = state.card.comments.filter(
 				(c: any) => c.id !== action.payload
 			);
+		});
+		builder.addCase(addCardLabel.fulfilled, (state, action) => {
+			state.card.labels.push(action.payload);
+		});
+		builder.addCase(removeCardLabel.fulfilled, (state, action) => {
+			const labelIndex = state.card.labels.findIndex(
+				(l: any) => l.id === action.payload
+			);
+
+			if (typeof labelIndex === 'number' && labelIndex >= 0) {
+				state.card.labels.splice(labelIndex, 1);
+			}
 		});
 	},
 });
