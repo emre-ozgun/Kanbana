@@ -5,6 +5,7 @@ import {
 	List,
 	updatePosition,
 	updatePositionDB,
+	updatePositionBetweenLists,
 } from '../../../features/board/kanbanSlice';
 import KanbanList from '../list/List';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -19,10 +20,13 @@ type ListType = {
 const Board = ({ lists }: ListType) => {
 	const dispatch = useAppDispatch();
 
+	console.log(lists);
+
 	const sortedLists = React.useMemo(() => {
 		return [...lists].sort((a: List, b: List) => a.order! - b.order!);
 	}, [lists]);
 
+	// * DRAG AND DROP LOGIC (parameter 'result' is not defined by typescript...)
 	const onDragEnd = (result: any) => {
 		const { destination, source, draggableId } = result;
 
@@ -30,13 +34,15 @@ const Board = ({ lists }: ListType) => {
 			return;
 		}
 
-		if (destination.index === source.index) {
+		if (
+			destination.index === source.index &&
+			destination.droppableId === source.droppableId
+		) {
 			return;
 		}
 
+		// *  WITHIN LIST
 		if (source.droppableId === destination.droppableId) {
-			// TODO -> WITHIN THE SAME LIST
-
 			const targetList = sortedLists.find(
 				(l: List) => l.id === Number(destination.droppableId)
 			);
@@ -91,6 +97,7 @@ const Board = ({ lists }: ListType) => {
 					}
 				}
 			} else {
+				// @ insert between
 				let prev: number = 0;
 				let next: number = 0;
 
@@ -105,9 +112,6 @@ const Board = ({ lists }: ListType) => {
 				if (targetCards) {
 					let posPrev = targetCards[prev].order;
 					let postNext = targetCards[next].order;
-
-					console.log(targetCards[prev].title);
-					console.log(targetCards[next].title);
 
 					let pos;
 
@@ -133,22 +137,125 @@ const Board = ({ lists }: ListType) => {
 						);
 					}
 				}
-
-				// insert between
 			}
+			return;
 		}
 
+		// * BETWEEN LISTS
 		if (source.droppableId !== destination.droppableId) {
-			// TODO -> BETWEEN LISTS
+			const cardId = Number(draggableId);
+
+			const targetListId = Number(destination.droppableId);
+			const sourceListId = Number(source.droppableId);
+			const currentCard = sortedLists
+				.find((l: List) => l.id === sourceListId)
+				?.cards.find((c: Card) => c.id === cardId);
+			const targetList = sortedLists.find((l: List) => l.id === targetListId);
+			const targetCards = [...targetList?.cards!].sort(
+				(a: Card, b: Card) => a.order! - b.order!
+			);
+			let position = 0;
+
+			if (destination.index === 0 && targetCards?.length! < 1) {
+				position = 2 ** 16;
+			} else if (destination.index === 0 && targetCards?.length! > 0) {
+				console.log('inserting card at first index of another NON-EMPTY list');
+				if (targetCards && targetCards[0].order) {
+					console.log(targetCards![0].title);
+					console.log(targetCards![0].order);
+					position = targetCards[0].order / 2;
+					dispatch(
+						updatePositionBetweenLists({
+							currentCard,
+							position,
+							targetListId,
+							sourceListId,
+							cardId,
+						})
+					);
+					return;
+				}
+			} else if (destination.index === targetCards?.length) {
+				console.log('inserting card at last index of another NON-EMPTY list');
+
+				if (targetCards && targetCards[destination.index - 1].order) {
+					position = targetCards[destination.index - 1].order! * 2;
+					dispatch(
+						updatePositionBetweenLists({
+							currentCard,
+							position,
+							targetListId,
+							sourceListId,
+							cardId,
+						})
+					);
+					return;
+				}
+			} else {
+				console.log('this else is also triggered');
+
+				let prev: number = 0;
+				let next: number = 0;
+
+				if (destination.index > source.index) {
+					console.log('dragged down');
+					prev = destination.index - 1;
+					next = destination.index;
+				} else if (
+					destination.index === source.index &&
+					destination.index !== 0
+				) {
+					console.log('same indexes');
+					prev = destination.index - 1;
+					next = destination.index;
+				} else {
+					prev = destination.index - 1;
+					next = destination.index;
+					console.log('dragged up');
+				}
+
+				position =
+					(targetCards![prev]!.order! + targetCards![next]!.order!) / 2;
+
+				console.log(prev, next);
+
+				console.log('inserting card at between cards of another list');
+			}
+
+			const payload = {
+				currentCard,
+				position,
+				targetListId,
+				sourceListId,
+				cardId,
+			};
+
+			// * Remove card from sourceList
+			// * Insert card at calculated position to targetList without losing its information
+
+			// UI STATE
+			dispatch(
+				updatePositionBetweenLists({
+					currentCard,
+					position,
+					targetListId,
+					sourceListId,
+					cardId,
+				})
+			);
+
+			// SERVER STATE
+
+			// dispatch(updatePositonBetweenListsDB(currentCard, position, targetListId, sourceListId, cardId));
+
+			// LOGIC
+			//  * 1) remove with card id (remove card from source list)
+			//  * 2) create in target list with position
+			//  ! WHILE CREATING, DON'T LOSE CARD INFO, CREATE WITH ALL THE INFORMATION AVAILABLE!
+
+			// 	console.log('moving card between lists...');
+			// console.log({ source, destination, draggableId });
 		}
-
-		console.log({
-			destination,
-			source,
-			draggableId,
-		});
-
-		//reordering logic
 	};
 
 	return (

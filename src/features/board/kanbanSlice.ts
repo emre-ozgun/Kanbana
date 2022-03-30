@@ -272,6 +272,31 @@ export const board = createSlice({
 			state = initialState;
 		},
 
+		updatePositionBetweenLists: (state, action) => {
+			const sourceCards = state.board.lists.find(
+				(l: List) => l.id === action.payload.sourceListId
+			)?.cards;
+
+			const sourceCardIndex = sourceCards?.findIndex(
+				(c: Card) => c.id === action.payload.cardId
+			);
+
+			if (typeof sourceCardIndex === 'number' && sourceCardIndex >= 0) {
+				sourceCards?.splice(sourceCardIndex, 1);
+			}
+
+			const targetCards = state.board.lists.find(
+				(l: List) => l.id === action.payload.targetListId
+			)?.cards;
+
+			const cardWithUpdatedOrder = {
+				...action.payload.currentCard,
+				order: action.payload.position,
+			};
+			console.log(cardWithUpdatedOrder);
+
+			targetCards?.push(cardWithUpdatedOrder);
+		},
 		updatePosition: (state, action) => {
 			if (action.payload.updateType === 'within') {
 				const targetList = state.board.lists.find(
@@ -453,6 +478,7 @@ export const {
 	removeBoardCardLabel,
 	deleteBoardCard,
 	updatePosition,
+	updatePositionBetweenLists,
 } = board.actions;
 
 // Other code such as selectors can use the imported `RootState` type
