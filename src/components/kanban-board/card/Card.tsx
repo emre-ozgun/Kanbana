@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from '../../../features/board/kanbanSlice';
 import {
 	MdSubject,
@@ -22,14 +22,18 @@ const KanbanCard = ({ card, id, index }: CardPropsType) => {
 
 	return (
 		<Draggable draggableId={String(id)} index={index}>
-			{(provided) => (
-				<Link to={`/board/${boardId}/list/${card.listId}/card/${card.id}`}>
-					<div
-						ref={provided.innerRef}
-						{...provided.draggableProps}
-						{...provided.dragHandleProps}
-						className='trello-wrapper'
-					>
+			{(provided, snapshot) => (
+				<div
+					ref={provided.innerRef}
+					{...provided.draggableProps}
+					{...provided.dragHandleProps}
+					// className={`trello-wrapper ${rotate && 'trello-wrapper-rotate'}`}
+					className={`trello wrapper ${
+						snapshot.isDragging && 'trello-wrapper-rotate'
+					}`}
+					// onDragStart={() => setRotate(true)}
+				>
+					<Link to={`/board/${boardId}/list/${card.listId}/card/${card.id}`}>
 						<div className='card'>
 							<div className='card-labels'>
 								{card.labels &&
@@ -87,8 +91,8 @@ const KanbanCard = ({ card, id, index }: CardPropsType) => {
 								)}
 							</div>
 						</div>
-					</div>
-				</Link>
+					</Link>
+				</div>
 			)}
 		</Draggable>
 	);

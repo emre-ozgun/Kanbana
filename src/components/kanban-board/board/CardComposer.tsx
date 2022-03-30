@@ -45,8 +45,9 @@ const CardComposer = ({ listId }: CardComposerProps) => {
 	if (isCardComposerOpen) {
 		return (
 			<div
-				className={`list-composer ${
-					isCardComposerOpen && 'active card-active'
+				className={`list-composer list-composer-card-composer ${
+					isCardComposerOpen &&
+					'active card-active list-composer-card-composer-active'
 				}`}
 				ref={cardComposerRef}
 			>
