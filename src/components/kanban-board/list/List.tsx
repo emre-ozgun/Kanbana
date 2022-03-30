@@ -37,10 +37,10 @@ const KanbanList = ({ list }: ListPropsType) => {
 										/>
 									);
 								})}
-								{provided.placeholder}
-								<CardComposer listId={list.id} />
 							</div>
 						)}
+						{provided.placeholder}
+						<CardComposer listId={list.id} />
 					</div>
 				</div>
 			)}

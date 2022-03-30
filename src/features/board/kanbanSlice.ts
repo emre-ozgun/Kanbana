@@ -333,9 +333,17 @@ export const board = createSlice({
 			const kList = state.board.lists.find(
 				(l: List) => l.id === Number(action.payload.listId)
 			);
+			console.log(kList?.title);
 			const cardToBeRemoved = kList?.cards.findIndex(
-				(c: Card) => c.id === action.payload.cardId
+				(c: Card) => c.id === Number(action.payload.cardId)
 			);
+
+			console.log(cardToBeRemoved);
+
+			if (cardToBeRemoved && typeof cardToBeRemoved === 'number') {
+				console.log(kList?.cards[cardToBeRemoved]);
+			}
+
 			if (typeof cardToBeRemoved === 'number') {
 				kList?.cards.splice(cardToBeRemoved, 1);
 			}
