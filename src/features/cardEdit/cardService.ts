@@ -146,6 +146,16 @@ const removeCardLabel = async (
 	return labelId;
 };
 
+const deleteCard = async (cardId: number, token: string | undefined) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	await axios.delete(`${baseUrl}/card/${cardId}`, config);
+};
+
 const cardService = {
 	getCard,
 	updateCardTitle,
@@ -154,6 +164,7 @@ const cardService = {
 	deleteCardComment,
 	addCardLabel,
 	removeCardLabel,
+	deleteCard,
 };
 
 export default cardService;

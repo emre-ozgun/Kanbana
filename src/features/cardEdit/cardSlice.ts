@@ -146,6 +146,20 @@ export const removeCardLabel = createAsyncThunk(
 	}
 );
 
+export const deleteCard = createAsyncThunk(
+	'card/deleteCard',
+	async (cardId: number, thunkApi) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await cardService.deleteCard(cardId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue('There was an error...');
+		}
+	}
+);
+
 export const card = createSlice({
 	name: 'card',
 	initialState,

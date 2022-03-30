@@ -272,6 +272,17 @@ export const board = createSlice({
 				kCard?.labels.splice(labelIndex, 1);
 			}
 		},
+		deleteBoardCard: (state, action) => {
+			const kList = state.board.lists.find(
+				(l: List) => l.id === Number(action.payload.listId)
+			);
+			const cardToBeRemoved = kList?.cards.findIndex(
+				(c: Card) => c.id === action.payload.cardId
+			);
+			if (typeof cardToBeRemoved === 'number') {
+				kList?.cards.splice(cardToBeRemoved, 1);
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(getBoard.pending, (state) => {});
@@ -341,6 +352,7 @@ export const {
 	deleteBoardCardComment,
 	addBoardCardLabel,
 	removeBoardCardLabel,
+	deleteBoardCard,
 } = board.actions;
 
 // Other code such as selectors can use the imported `RootState` type

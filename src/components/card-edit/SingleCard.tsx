@@ -1,9 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCard, clearCard } from '../../features/cardEdit/cardSlice';
+import {
+	getCard,
+	clearCard,
+	deleteCard,
+	selectCard,
+} from '../../features/cardEdit/cardSlice';
+import { deleteBoardCard } from '../../features/board/kanbanSlice';
 import useOnClickOutside from '../../utils/useClickOutside';
-import { selectCard } from '../../features/cardEdit/cardSlice';
 import Spinner from '../spinner/Spinner';
 import CardHeader from './CardHeader';
 import CardDescription from './CardDescription';
@@ -14,7 +19,6 @@ import CardLabelMaker from './CardLabelMaker';
 import CardDateMaker from './CardDateMaker';
 
 import {
-	MdOutlineLabel,
 	MdOutlineCheckBox,
 	MdOutlineAccessTime,
 	MdRemove,
@@ -37,6 +41,12 @@ const SingleCard = () => {
 			dispatch(clearCard());
 		};
 	}, [dispatch, cardId]);
+
+	const handleDeleteCard = () => {
+		dispatch(deleteCard(card.id));
+		dispatch(deleteBoardCard({ listId, cardId }));
+		navigate(-1);
+	};
 
 	return (
 		<div className='overlay'>
@@ -93,7 +103,10 @@ const SingleCard = () => {
 
 										<span>Dates</span>
 									</div>
-									<div className='sidebar-link delete'>
+									<div
+										className='sidebar-link delete'
+										onClick={() => handleDeleteCard()}
+									>
 										<MdRemove />
 
 										<span>Delete Card</span>
