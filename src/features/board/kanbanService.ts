@@ -167,7 +167,7 @@ const addCard = async (
 		title: data.title,
 		duedate: null,
 		description: null,
-		order: null,
+		order: data.order,
 		listId: data.listId,
 		labels: [],
 		checklists: [],

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 import kanbanService from './kanbanService';
-import cardLS from '../../utils/cardPositionLS';
 
 export type BoardMember = {
 	username: string;
@@ -158,20 +157,27 @@ export const addCard = createAsyncThunk(
 		const { auth, board } = thunkApi.getState() as RootState;
 		const token = auth.user?.token;
 
-		const targetList = board.board.lists.find((l: List) => l.id === listId);
-		console.log({ targetList });
+		const currentCards = board.board.lists.find(
+			(l: List) => l.id === listId
+		)?.cards;
 
-		let position;
+		let position = 0;
+		let max = 0;
 
-		const cardPos = cardLS.getCardPositionFromLS();
-
-		if (Number(cardPos)) {
-			position = Number(cardPos) * 1.23277297;
+		if (currentCards?.length! < 1) {
+			position = 2 ** 16;
 		} else {
-			position = 1.122274927;
-		}
+			for (let i = 0; i < currentCards?.length!; i++) {
+				const order = currentCards![i].order;
+				if (typeof order === 'number') {
+					if (order >= max) {
+						max = order;
+					}
+				}
+			}
 
-		cardLS.setCardPositionLS(position);
+			position = max * 2;
+		}
 
 		try {
 			return await kanbanService.addCard(listId, cardTitle, token, position);
@@ -198,7 +204,7 @@ export const addList = createAsyncThunk(
 		let max = 0;
 
 		if (board.board.lists.length < 1) {
-			position = 2 * 4;
+			position = 2 ** 16;
 		} else {
 			for (let i = 0; i < board.board.lists.length; i++) {
 				const order = board.board.lists[i].order;
