@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 import kanbanService from './kanbanService';
+import cardLS from '../../utils/cardPositionLS';
 
 export type BoardMember = {
 	username: string;
@@ -28,7 +29,7 @@ export type List = {
 	cards: Card[];
 };
 
-type Board = {
+export type Board = {
 	id: number;
 	title: string;
 	ownerId: number;
@@ -154,11 +155,26 @@ export const addCard = createAsyncThunk(
 		{ listId, cardTitle }: { listId: number; cardTitle: string },
 		thunkApi
 	) => {
-		const { auth } = thunkApi.getState() as RootState;
+		const { auth, board } = thunkApi.getState() as RootState;
 		const token = auth.user?.token;
 
+		const targetList = board.board.lists.find((l: List) => l.id === listId);
+		console.log({ targetList });
+
+		let position;
+
+		const cardPos = cardLS.getCardPositionFromLS();
+
+		if (Number(cardPos)) {
+			position = Number(cardPos) * 1.23277297;
+		} else {
+			position = 1.122274927;
+		}
+
+		cardLS.setCardPositionLS(position);
+
 		try {
-			return await kanbanService.addCard(listId, cardTitle, token);
+			return await kanbanService.addCard(listId, cardTitle, token, position);
 		} catch (error) {
 			return thunkApi.rejectWithValue(
 				`There was an error, could not fetch board...`
@@ -175,11 +191,29 @@ export const addList = createAsyncThunk(
 		}: { boardId: number | string | undefined; listTitle: string },
 		thunkApi
 	) => {
-		const { auth } = thunkApi.getState() as RootState;
+		const { auth, board } = thunkApi.getState() as RootState;
 		const token = auth.user?.token;
 
+		let position = 0;
+		let max = 0;
+
+		if (board.board.lists.length < 1) {
+			position = 2 * 4;
+		} else {
+			for (let i = 0; i < board.board.lists.length; i++) {
+				const order = board.board.lists[i].order;
+				if (typeof order === 'number') {
+					if (order >= max) {
+						max = order;
+					}
+				}
+			}
+
+			position = max * 2;
+		}
+
 		try {
-			return await kanbanService.addList(boardId, listTitle, token);
+			return await kanbanService.addList(boardId, listTitle, token, position);
 		} catch (error) {
 			return thunkApi.rejectWithValue(
 				`There was an error, could not fetch board...`

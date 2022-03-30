@@ -141,7 +141,8 @@ const inviteMembersToBoard = async (
 const addCard = async (
 	listId: number,
 	cardTitle: string,
-	token: string | undefined
+	token: string | undefined,
+	position: number
 ) => {
 	const config = {
 		headers: {
@@ -151,7 +152,7 @@ const addCard = async (
 
 	const { data } = await axios.post(
 		`${baseUrl}/card`,
-		{ listId, title: cardTitle },
+		{ listId, title: cardTitle, order: position },
 		config
 	);
 
@@ -178,7 +179,8 @@ const addCard = async (
 const addList = async (
 	boardId: number | string | undefined,
 	listTitle: string,
-	token: string | undefined
+	token: string | undefined,
+	position: number
 ) => {
 	const config = {
 		headers: {
@@ -188,7 +190,7 @@ const addList = async (
 
 	const { data } = await axios.post(
 		`${baseUrl}/list`,
-		{ boardId: Number(boardId), title: listTitle },
+		{ boardId: Number(boardId), title: listTitle, order: position },
 		config
 	);
 

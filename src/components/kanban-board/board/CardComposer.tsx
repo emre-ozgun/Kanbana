@@ -33,8 +33,6 @@ const CardComposer = ({ listId }: CardComposerProps) => {
 	const handleAddCard = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (cardTitle) {
-			console.log(cardTitle);
-
 			dispatch(addCard({ listId, cardTitle }));
 			setCardTite('');
 			setIsCardComposerOpen(false);
