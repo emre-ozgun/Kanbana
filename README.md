@@ -1,12 +1,12 @@
 
-## Authentication
+### Authentication
 JWT Auth, utilizing local storage
 
-## Redux Toolkit
-global state management solution
+### Redux Toolkit
+Global state management solution
 
-## Vanilla CSS
-for styling
+### Vanilla CSS
+For styling
 
 
 
