@@ -326,6 +326,27 @@ const deleteListBoard = async (listId: number, token: string | undefined) => {
 	return listId;
 };
 
+export const editListTitle = async (
+	boardId: string | undefined,
+	title: string,
+	listId: number,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	const { data } = await axios.put(
+		`${baseUrl}/list/${listId}`,
+		{ boardId: Number(boardId), title },
+		config
+	);
+
+	return { id: data.id, title: data.title };
+};
+
 // ! kanban List and Card => CRUD Operations
 
 const boardService = {
@@ -339,6 +360,7 @@ const boardService = {
 	updatePositionDB,
 	updatePositionBetweenListsDB,
 	deleteListBoard,
+	editListTitle,
 };
 
 export default boardService;

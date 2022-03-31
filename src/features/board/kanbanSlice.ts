@@ -244,6 +244,29 @@ export const deleteListBoard = createAsyncThunk(
 	}
 );
 
+export const editListTitle = createAsyncThunk(
+	'board/editListTitle',
+	async (
+		{
+			boardId,
+			title,
+			listId,
+		}: { boardId: string | undefined; title: string; listId: number },
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.editListTitle(boardId, title, listId, token);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+
 export type UpdatePositionParamTypes = {
 	updateType: 'within' | 'between' | 'list';
 	newPosition: number;
@@ -538,6 +561,18 @@ export const board = createSlice({
 			);
 
 			state.board.lists.splice(listIndex, 1);
+		});
+		builder.addCase(editListTitle.fulfilled, (state, action) => {
+			//  action.payload.id
+			//  action.payload.title
+
+			const list = state.board.lists.find(
+				(l: List) => l.id === action.payload.id
+			);
+
+			if (list) {
+				list.title = action.payload.title;
+			}
 		});
 	},
 });
