@@ -20,6 +20,7 @@ const ListHeader = ({ title, listId }: ListHeaderPropsType) => {
 
 	const [isEditing, setIsEditing] = useState(false);
 	const [showDelete, setShowDelete] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const [newTitle, setNewTitle] = useState('');
 	const deleteListRef = useRef<null | HTMLDivElement>(null);
@@ -40,10 +41,28 @@ const ListHeader = ({ title, listId }: ListHeaderPropsType) => {
 	const handler = () => {
 		if (newTitle === title || !newTitle) {
 		} else {
+			setLoading(true);
 			dispatch(editListTitle({ boardId, title: newTitle, listId }));
+			setLoading(false);
 		}
 		setIsEditing(false);
 	};
+
+	if (loading) {
+		return (
+			<div className='list-header list-header-edit'>
+				<div className='list-header-title'>{newTitle}</div>
+				<div
+					className='list-header-cta'
+					onClick={() => {
+						setShowDelete(true);
+					}}
+				>
+					<MdMoreHoriz />
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className='list-header list-header-edit'>

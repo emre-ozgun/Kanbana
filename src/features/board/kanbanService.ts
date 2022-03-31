@@ -256,58 +256,10 @@ const updatePositionBetweenListsDB = async (
 		config
 	);
 
-	const cardForPut = {
-		...currentCard,
-		id: data.id,
-		order: data.order,
-		title: data.title,
-		listId: data.listId,
-	};
-
-	// * Batch update, unfortunately I can't update card fields with neither card/post nor card/put
-
-	const composedLabels = [];
-	const composedComments: any[] = [];
-
-	// recreate the fields (brute-forcy solution)
-	for (const [key, value] of Object.entries(cardForPut)) {
-		if (key === 'labels') {
-			for (let label of value) {
-				const { data } = await axios.post(
-					`${baseUrl}/card-label`,
-					{
-						cardId: cardForPut.id,
-						labelId: label.id,
-					},
-					config
-				);
-				composedLabels.push(data);
-			}
-		}
-
-		if (key === 'comments') {
-			for (let comment of value) {
-				const { data } = await axios.post(
-					`${baseUrl}/comment`,
-					{
-						cardId: cardForPut.id,
-						message: comment.message,
-					},
-					config
-				);
-				composedLabels.push(data);
-			}
-		}
-	}
-
-	const finalComposedData = {
-		...data,
-		labels: composedLabels,
-		comments: composedComments,
-	};
+	// * unfortunately I can't update card fields with neither card/post nor card/put. (Results in loss of data)
 
 	return {
-		composedCard: finalComposedData,
+		composedCard: data,
 		oldCardId: cardId,
 	};
 };

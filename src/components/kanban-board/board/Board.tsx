@@ -205,6 +205,7 @@ const Board = ({ lists }: ListType) => {
 					destination.index !== 0
 				) {
 					console.log('same indexes');
+
 					prev = destination.index - 1;
 					next = destination.index;
 				} else {
