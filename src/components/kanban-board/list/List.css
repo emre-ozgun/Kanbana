@@ -1,0 +1,69 @@
+.list-header-edit {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 4px 8px;
+	position: relative;
+}
+
+.list-header-cta {
+	cursor: pointer;
+	display: grid;
+	place-items: center;
+	color: rgba(2, 2, 46, 0.22);
+	font-size: 18px;
+}
+.list-header-cta:hover {
+	opacity: 0.8;
+}
+
+.delete-list-modal {
+	display: none;
+	position: absolute;
+	z-index: 999;
+	right: 0;
+	top: 24px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-ms-border-radius: 3px;
+	-o-border-radius: 3px;
+	padding: 1.25rem 1rem;
+}
+
+.delete-list-modal.active {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	width: auto;
+	height: auto;
+	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
+}
+
+.delete-list-modal > small {
+	margin-bottom: 12px;
+}
+
+.separator {
+	width: 100%;
+	height: 1px;
+	background-color: #eee;
+}
+
+.delete-list-modal > button {
+	padding: 0.3rem 0.6rem;
+	border: none;
+	outline: none;
+	color: var(--clr-white-grey);
+	background-color: #b04732da;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+	font-size: 12px;
+	text-transform: capitalize;
+	cursor: pointer;
+	font-weight: 600;
+}

@@ -300,8 +300,6 @@ const updatePositionBetweenListsDB = async (
 		}
 	}
 
-	console.log(composedComments);
-
 	const finalComposedData = {
 		...data,
 		labels: composedLabels,
@@ -312,6 +310,20 @@ const updatePositionBetweenListsDB = async (
 		composedCard: finalComposedData,
 		oldCardId: cardId,
 	};
+};
+
+const deleteListBoard = async (listId: number, token: string | undefined) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	// delete card
+
+	await axios.delete(`${baseUrl}/list/${listId}`, config);
+
+	return listId;
 };
 
 // ! kanban List and Card => CRUD Operations
@@ -326,6 +338,7 @@ const boardService = {
 	addList,
 	updatePositionDB,
 	updatePositionBetweenListsDB,
+	deleteListBoard,
 };
 
 export default boardService;

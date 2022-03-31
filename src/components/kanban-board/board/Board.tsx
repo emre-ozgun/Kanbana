@@ -21,8 +21,6 @@ type ListType = {
 const Board = ({ lists }: ListType) => {
 	const dispatch = useAppDispatch();
 
-	console.log(lists);
-
 	const sortedLists = React.useMemo(() => {
 		return [...lists].sort((a: List, b: List) => a.order! - b.order!);
 	}, [lists]);

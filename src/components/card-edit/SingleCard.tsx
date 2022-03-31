@@ -69,7 +69,7 @@ const SingleCard = () => {
 											<CardLabels labels={card.labels} />
 										)}
 
-										{!card.duedate && <CardDuedate duedate={card.duedate} />}
+										{card.duedate && <CardDuedate duedate={card.duedate} />}
 									</section>
 								)}
 

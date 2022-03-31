@@ -3,6 +3,8 @@ import { List, Card } from '../../../features/board/kanbanSlice';
 import CardComposer from '../board/CardComposer';
 import KanbanCard from '../card/Card';
 import { Droppable } from 'react-beautiful-dnd';
+import ListHeader from './ListHeader';
+import './List.css';
 
 type ListPropsType = {
 	list: List;
@@ -24,7 +26,8 @@ const KanbanList = ({ list }: ListPropsType) => {
 				>
 					<div className='list-content'>
 						{/* <ListHeader/> */}
-						<div className='list-header'>{list.title}</div>
+						<ListHeader title={list.title} listId={list.id} />
+
 						{sortedCards && sortedCards.length > 0 && (
 							<div className='card-container'>
 								{sortedCards.map((card: Card, index) => {
