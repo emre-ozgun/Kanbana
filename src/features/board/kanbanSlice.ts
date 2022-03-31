@@ -262,6 +262,41 @@ export const updatePositionDB = createAsyncThunk(
 	}
 );
 
+export const updatePositionBetweenListsDB = createAsyncThunk(
+	'board/updatePositionBetweenListsDB',
+	async (
+		{
+			currentCard,
+			position,
+			targetListId,
+			cardId,
+		}: {
+			currentCard: Card | undefined;
+			position: number;
+			targetListId: number;
+			cardId: number;
+		},
+		thunkApi
+	) => {
+		const { auth } = thunkApi.getState() as RootState;
+		const token = auth.user?.token;
+
+		try {
+			return await kanbanService.updatePositionBetweenListsDB(
+				currentCard,
+				position,
+				targetListId,
+				cardId,
+				token
+			);
+		} catch (error) {
+			return thunkApi.rejectWithValue(
+				`There was an error, could not fetch board...`
+			);
+		}
+	}
+);
+
 // ! List and Card -> CRUD OPERATIONS
 
 export const board = createSlice({
@@ -270,6 +305,22 @@ export const board = createSlice({
 	reducers: {
 		clear: (state) => {
 			state = initialState;
+		},
+
+		updatePositionBetweenListsDB: (state, action) => {
+			const targetCards = state.board.lists.find(
+				(l: List) => l.id === action.payload.composedCard.listId
+			)?.cards;
+
+			const oldCardIdx = targetCards?.findIndex(
+				(c: Card) => (c.id = action.payload.oldCardId)
+			);
+
+			if (typeof oldCardIdx === 'number' && oldCardIdx >= 0) {
+				targetCards?.splice(oldCardIdx, 1);
+			}
+
+			targetCards?.push(action.payload.composedCard);
 		},
 
 		updatePositionBetweenLists: (state, action) => {

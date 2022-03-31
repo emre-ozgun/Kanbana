@@ -6,6 +6,7 @@ import {
 	updatePosition,
 	updatePositionDB,
 	updatePositionBetweenLists,
+	updatePositionBetweenListsDB,
 } from '../../../features/board/kanbanSlice';
 import KanbanList from '../list/List';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -164,32 +165,32 @@ const Board = ({ lists }: ListType) => {
 					console.log(targetCards![0].title);
 					console.log(targetCards![0].order);
 					position = targetCards[0].order / 2;
-					dispatch(
-						updatePositionBetweenLists({
-							currentCard,
-							position,
-							targetListId,
-							sourceListId,
-							cardId,
-						})
-					);
-					return;
+					// dispatch(
+					// 	updatePositionBetweenLists({
+					// 		currentCard,
+					// 		position,
+					// 		targetListId,
+					// 		sourceListId,
+					// 		cardId,
+					// 	})
+					// );
+					// return;
 				}
 			} else if (destination.index === targetCards?.length) {
 				console.log('inserting card at last index of another NON-EMPTY list');
 
 				if (targetCards && targetCards[destination.index - 1].order) {
 					position = targetCards[destination.index - 1].order! * 2;
-					dispatch(
-						updatePositionBetweenLists({
-							currentCard,
-							position,
-							targetListId,
-							sourceListId,
-							cardId,
-						})
-					);
-					return;
+					// dispatch(
+					// 	updatePositionBetweenLists({
+					// 		currentCard,
+					// 		position,
+					// 		targetListId,
+					// 		sourceListId,
+					// 		cardId,
+					// 	})
+					// );
+					// return;
 				}
 			} else {
 				console.log('this else is also triggered');
@@ -222,14 +223,6 @@ const Board = ({ lists }: ListType) => {
 				console.log('inserting card at between cards of another list');
 			}
 
-			const payload = {
-				currentCard,
-				position,
-				targetListId,
-				sourceListId,
-				cardId,
-			};
-
 			// * Remove card from sourceList
 			// * Insert card at calculated position to targetList without losing its information
 
@@ -240,6 +233,15 @@ const Board = ({ lists }: ListType) => {
 					position,
 					targetListId,
 					sourceListId,
+					cardId,
+				})
+			);
+			dispatch(
+				updatePositionBetweenListsDB({
+					currentCard,
+					position,
+					targetListId,
+
 					cardId,
 				})
 			);

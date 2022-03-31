@@ -224,14 +224,94 @@ const updatePositionDB = async (
 		return;
 	}
 
-	if (updateType === 'between') {
-		// source list id -> delete item from source list
-		// destination list id -> insert @ destination list
-	}
-
 	if (updateType === 'list') {
 		// moving lists -> TO BE DISCUSSED
 	}
+};
+const updatePositionBetweenListsDB = async (
+	currentCard: Card | undefined,
+	position: number,
+	targetListId: number,
+	cardId: number,
+	token: string | undefined
+) => {
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
+
+	// delete card
+
+	await axios.delete(`${baseUrl}/card/${cardId}`, config);
+
+	const { data } = await axios.post(
+		`${baseUrl}/card`,
+		{
+			listId: targetListId,
+			order: position,
+			title: currentCard?.title,
+			description: currentCard?.description || '',
+		},
+		config
+	);
+
+	const cardForPut = {
+		...currentCard,
+		id: data.id,
+		order: data.order,
+		title: data.title,
+		listId: data.listId,
+	};
+
+	// * Batch update, unfortunately I can't update card fields with neither card/post nor card/put
+
+	const composedLabels = [];
+	const composedComments: any[] = [];
+
+	// recreate the fields (brute-forcy solution)
+	for (const [key, value] of Object.entries(cardForPut)) {
+		if (key === 'labels') {
+			for (let label of value) {
+				const { data } = await axios.post(
+					`${baseUrl}/card-label`,
+					{
+						cardId: cardForPut.id,
+						labelId: label.id,
+					},
+					config
+				);
+				composedLabels.push(data);
+			}
+		}
+
+		if (key === 'comments') {
+			for (let comment of value) {
+				const { data } = await axios.post(
+					`${baseUrl}/comment`,
+					{
+						cardId: cardForPut.id,
+						message: comment.message,
+					},
+					config
+				);
+				composedLabels.push(data);
+			}
+		}
+	}
+
+	console.log(composedComments);
+
+	const finalComposedData = {
+		...data,
+		labels: composedLabels,
+		comments: composedComments,
+	};
+
+	return {
+		composedCard: finalComposedData,
+		oldCardId: cardId,
+	};
 };
 
 // ! kanban List and Card => CRUD Operations
@@ -245,6 +325,7 @@ const boardService = {
 	addCard,
 	addList,
 	updatePositionDB,
+	updatePositionBetweenListsDB,
 };
 
 export default boardService;
