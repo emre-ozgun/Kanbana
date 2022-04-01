@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 import kanbanService from './kanbanService';
@@ -309,11 +309,13 @@ export const updatePositionBetweenListsDB = createAsyncThunk(
 			position,
 			targetListId,
 			cardId,
+			sourceListId,
 		}: {
 			currentCard: Card | undefined;
 			position: number;
 			targetListId: number;
 			cardId: number;
+			sourceListId: number;
 		},
 		thunkApi
 	) => {
@@ -326,6 +328,7 @@ export const updatePositionBetweenListsDB = createAsyncThunk(
 				position,
 				targetListId,
 				cardId,
+				sourceListId,
 				token
 			);
 		} catch (error) {
@@ -346,21 +349,23 @@ export const board = createSlice({
 			state = initialState;
 		},
 
-		updatePositionBetweenListsDB: (state, action) => {
-			const targetCards = state.board.lists.find(
-				(l: List) => l.id === action.payload.composedCard.listId
-			)?.cards;
+		// updatePositionBetweenListsDB: (state, action) => {
+		// 	const targetCards = state.board.lists.find(
+		// 		(l: List) => l.id === action.payload.targetListId
+		// 	)?.cards;
 
-			const oldCardIdx = targetCards?.findIndex(
-				(c: Card) => (c.id = action.payload.oldCardId)
-			);
+		// 	console.log(targetCards);
 
-			if (typeof oldCardIdx === 'number' && oldCardIdx >= 0) {
-				targetCards?.splice(oldCardIdx, 1);
-			}
+		// 	const oldCardIdx = targetCards?.findIndex(
+		// 		(c: Card) => (c.id = action.payload.oldCardId)
+		// 	);
 
-			targetCards?.push(action.payload.composedCard);
-		},
+		// 	if (typeof oldCardIdx === 'number' && oldCardIdx >= 0) {
+		// 		targetCards?.splice(oldCardIdx, 1, action.payload.replacedCard);
+		// 	}
+
+		// 	// targetCards?.push(action.payload.replacedCard);
+		// },
 
 		updatePositionBetweenLists: (state, action) => {
 			const sourceCards = state.board.lists.find(
@@ -383,7 +388,6 @@ export const board = createSlice({
 				...action.payload.currentCard,
 				order: action.payload.position,
 			};
-			console.log(cardWithUpdatedOrder);
 
 			targetCards?.push(cardWithUpdatedOrder);
 		},
@@ -573,6 +577,77 @@ export const board = createSlice({
 			if (list) {
 				list.title = action.payload.title;
 			}
+		});
+
+		builder.addCase(updatePositionBetweenListsDB.fulfilled, (state, action) => {
+			console.log('');
+
+			const targetCards = state.board.lists.find(
+				(l: List) => l.id === action.payload.targetList
+			)?.cards;
+
+			const cardToBeReplaced = targetCards?.find(
+				(c: Card) => c.id === action.payload.oldCardId
+			);
+
+			if (cardToBeReplaced) {
+				cardToBeReplaced.id = action.payload.replacedCard.id;
+			}
+
+			// console.log(current(cardToBeReplaced));
+
+			// console.log(
+			// 	'card to be replaced',
+			// 	current(
+			// 		targetCards?.find((c: Card) => c.id === action.payload.oldCardId)
+			// 	)
+			// );
+
+			// targetCards?.push(action.payload.replacedCard);
+
+			// targetCards?.forEach((c: Card) => console.log(c.title));
+
+			// console.log({ targetCards });
+
+			// const cardIdxToBeReplaced = targetCards?.findIndex(
+			// 	(c: Card) => c.id === action.payload.oldCardId
+			// );
+
+			// console.log('index to be replaced', cardIdxToBeReplaced);
+
+			// if (typeof cardIdxToBeReplaced === 'number') {
+			// 	targetCards?.splice(
+			// 		cardIdxToBeReplaced,
+			// 		1,
+			// 		action.payload.replacedCard
+			// 	);
+			// }
+
+			// const sourceCards = state.board.lists.find(
+			// 	(l: List) => l.id === action.payload.sourceListId
+			// )?.cards;
+
+			// console.log(sourceCards?.length);
+
+			// const oldCardIdx = sourceCards?.findIndex(
+			// 	(c: Card) => c.id === action.payload.oldCardId
+			// );
+
+			// console.log('old card index', oldCardIdx);
+
+			// if (typeof oldCardIdx === 'number' && oldCardIdx >= 0) {
+			// 	sourceCards?.splice(oldCardIdx, 1);
+			// }
+
+			// const targetCards = state.board.lists.find(
+			// 	(l: List) => l.id === action.payload.targetList
+			// )?.cards;
+
+			// console.log(targetCards?.length);
+
+			// if (targetCards) {
+			// 	targetCards.push(action.payload.replacedCard);
+			// }
 		});
 	},
 });

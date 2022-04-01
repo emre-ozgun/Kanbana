@@ -56,7 +56,7 @@ const KanbanCard = ({ card, id, index }: CardPropsType) => {
 									</div>
 								)}
 
-								{card.duedate && (
+								{card?.duedate && (
 									<div className='badge'>
 										<span className='badge-icon'>
 											<div className='badge-icon-text'>

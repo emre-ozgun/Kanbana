@@ -1,4 +1,4 @@
-export const formatDate = (dateStr: string) => {
+export const formatDate = (dateStr: string | null | undefined) => {
 	const months = [
 		'Jan',
 		'Feb',
@@ -14,10 +14,10 @@ export const formatDate = (dateStr: string) => {
 		'Dec',
 	];
 
-	const dateFields = dateStr.split('-');
-
-	const day = dateFields[2];
-	const month = months[Number(dateFields[1]) - 1];
-
-	return `${day} ${month}`;
+	if (typeof dateStr === 'string') {
+		const dateFields = dateStr.split('-');
+		const day = dateFields[2];
+		const month = months[Number(dateFields[1]) - 1];
+		return `${day} ${month}`;
+	}
 };

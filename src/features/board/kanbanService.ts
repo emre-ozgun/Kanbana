@@ -233,6 +233,7 @@ const updatePositionBetweenListsDB = async (
 	position: number,
 	targetListId: number,
 	cardId: number,
+	sourceListId: number,
 	token: string | undefined
 ) => {
 	const config = {
@@ -241,7 +242,7 @@ const updatePositionBetweenListsDB = async (
 		},
 	};
 
-	// delete card
+	console.log('card to be deleted', currentCard);
 
 	await axios.delete(`${baseUrl}/card/${cardId}`, config);
 
@@ -251,16 +252,19 @@ const updatePositionBetweenListsDB = async (
 			listId: targetListId,
 			order: position,
 			title: currentCard?.title,
-			description: currentCard?.description || '',
 		},
 		config
 	);
 
+	console.log('card created', data);
+
 	// * unfortunately I can't update card fields with neither card/post nor card/put. (Results in loss of data)
 
 	return {
-		composedCard: data,
+		replacedCard: data,
+		targetList: data.listId,
 		oldCardId: cardId,
+		sourceListId,
 	};
 };
 

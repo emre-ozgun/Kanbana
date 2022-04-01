@@ -163,32 +163,12 @@ const Board = ({ lists }: ListType) => {
 					console.log(targetCards![0].title);
 					console.log(targetCards![0].order);
 					position = targetCards[0].order / 2;
-					// dispatch(
-					// 	updatePositionBetweenLists({
-					// 		currentCard,
-					// 		position,
-					// 		targetListId,
-					// 		sourceListId,
-					// 		cardId,
-					// 	})
-					// );
-					// return;
 				}
 			} else if (destination.index === targetCards?.length) {
 				console.log('inserting card at last index of another NON-EMPTY list');
 
 				if (targetCards && targetCards[destination.index - 1].order) {
 					position = targetCards[destination.index - 1].order! * 2;
-					// dispatch(
-					// 	updatePositionBetweenLists({
-					// 		currentCard,
-					// 		position,
-					// 		targetListId,
-					// 		sourceListId,
-					// 		cardId,
-					// 	})
-					// );
-					// return;
 				}
 			} else {
 				console.log('this else is also triggered');
@@ -240,22 +220,10 @@ const Board = ({ lists }: ListType) => {
 					currentCard,
 					position,
 					targetListId,
-
+					sourceListId,
 					cardId,
 				})
 			);
-
-			// SERVER STATE
-
-			// dispatch(updatePositonBetweenListsDB(currentCard, position, targetListId, sourceListId, cardId));
-
-			// LOGIC
-			//  * 1) remove with card id (remove card from source list)
-			//  * 2) create in target list with position
-			//  ! WHILE CREATING, DON'T LOSE CARD INFO, CREATE WITH ALL THE INFORMATION AVAILABLE!
-
-			// 	console.log('moving card between lists...');
-			// console.log({ source, destination, draggableId });
 		}
 	};
 
