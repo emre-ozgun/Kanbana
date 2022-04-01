@@ -1,6 +1,6 @@
 #### Requirements unfulfilled
-1. Adding & removing duedate. (in card modal route)
-2. Adding & removing checklist and checklist items. (in card moda route)
+1. Adding & removing duedate. (in card modal)
+2. Adding & removing checklist and checklist items. (in card modal)
 3. Dragging/dropping lists themselves.
 
 
