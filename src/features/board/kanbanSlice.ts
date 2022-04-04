@@ -349,23 +349,7 @@ export const board = createSlice({
 			state = initialState;
 		},
 
-		// updatePositionBetweenListsDB: (state, action) => {
-		// 	const targetCards = state.board.lists.find(
-		// 		(l: List) => l.id === action.payload.targetListId
-		// 	)?.cards;
-
-		// 	console.log(targetCards);
-
-		// 	const oldCardIdx = targetCards?.findIndex(
-		// 		(c: Card) => (c.id = action.payload.oldCardId)
-		// 	);
-
-		// 	if (typeof oldCardIdx === 'number' && oldCardIdx >= 0) {
-		// 		targetCards?.splice(oldCardIdx, 1, action.payload.replacedCard);
-		// 	}
-
-		// 	// targetCards?.push(action.payload.replacedCard);
-		// },
+		
 
 		updatePositionBetweenLists: (state, action) => {
 			const sourceCards = state.board.lists.find(
@@ -594,60 +578,13 @@ export const board = createSlice({
 				cardToBeReplaced.id = action.payload.replacedCard.id;
 			}
 
-			// console.log(current(cardToBeReplaced));
+			
 
-			// console.log(
-			// 	'card to be replaced',
-			// 	current(
-			// 		targetCards?.find((c: Card) => c.id === action.payload.oldCardId)
-			// 	)
-			// );
+			
 
-			// targetCards?.push(action.payload.replacedCard);
+			
 
-			// targetCards?.forEach((c: Card) => console.log(c.title));
-
-			// console.log({ targetCards });
-
-			// const cardIdxToBeReplaced = targetCards?.findIndex(
-			// 	(c: Card) => c.id === action.payload.oldCardId
-			// );
-
-			// console.log('index to be replaced', cardIdxToBeReplaced);
-
-			// if (typeof cardIdxToBeReplaced === 'number') {
-			// 	targetCards?.splice(
-			// 		cardIdxToBeReplaced,
-			// 		1,
-			// 		action.payload.replacedCard
-			// 	);
-			// }
-
-			// const sourceCards = state.board.lists.find(
-			// 	(l: List) => l.id === action.payload.sourceListId
-			// )?.cards;
-
-			// console.log(sourceCards?.length);
-
-			// const oldCardIdx = sourceCards?.findIndex(
-			// 	(c: Card) => c.id === action.payload.oldCardId
-			// );
-
-			// console.log('old card index', oldCardIdx);
-
-			// if (typeof oldCardIdx === 'number' && oldCardIdx >= 0) {
-			// 	sourceCards?.splice(oldCardIdx, 1);
-			// }
-
-			// const targetCards = state.board.lists.find(
-			// 	(l: List) => l.id === action.payload.targetList
-			// )?.cards;
-
-			// console.log(targetCards?.length);
-
-			// if (targetCards) {
-			// 	targetCards.push(action.payload.replacedCard);
-			// }
+			
 		});
 	},
 });
