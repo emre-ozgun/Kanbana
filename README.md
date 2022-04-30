@@ -3,7 +3,7 @@
 2. <code>npm install</code>
 3. <code>docker-compose up --build</code>
 
-## client-side
+## Client-side
 1. <code>npm install && npm start</code>
 
 
