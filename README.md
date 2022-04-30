@@ -1,3 +1,14 @@
+## Instructions to spin up the server
+1. navigate to server-side
+2. <code>npm install</code>
+3. <code>docker-compose up --build</code>
+
+## client-side
+1. <code>npm install && npm start</code>
+
+
+
+
 #### Requirements unfulfilled
 1. Adding & removing duedate. (in card modal)
 2. Adding & removing checklist and checklist items. (in card modal)
